@@ -1,0 +1,78 @@
+import serial
+import io
+import Tkinter
+from Tkinter import*
+import ttk
+import threading
+import time
+
+serial_data = ''
+filter_data = ''
+update_period = 5
+serial_object = None
+gui = Tk()
+gui.title("Seatrec Serial Interface")
+
+serial_object = serial.Serial('/dev/tty.usbserial', 9600)
+
+def get_data():
+    """basic data reading and filtering, eliminates newlines from n and r and seperates with commas"""
+    global serial_object
+    global filter_data
+    global serial_object
+    global filter_data
+
+    while(1):   
+        try:
+            serial_data = serial_object.readline().strip('\n').strip('\r').strip(';')
+            filter_data = serial_data.split(':')
+            print filter_data
+        except TypeError:
+            pass
+
+def update_gui(): 
+    """data collection and presentation"""
+    global filter_data
+    global update_period
+    text.place(x = 15, y = 10)
+    
+    progress_1.place(x = 150, y = 50)
+    progress_2.place(x = 60, y = 130)
+    progress_3.place(x = 60, y = 160)
+    progress_4.place(x = 60, y = 190)
+    progress_5.place(x = 60, y = 220)
+    new = time.time()
+ 
+    while(1):
+        if filter_data:    
+            text.insert(END, filter_data)
+            text.insert(END,"\n")
+            try:
+                progress_1["value"] = filter_data[0]
+                progress_2["value"] = filter_data[1]
+                progress_3["value"] = filter_data[2]
+                progress_4["value"] = filter_data[3]
+                progress_5["value"] = filter_data[4]          
+            except :
+                pass   
+                         
+                if time.time() - new >= update_period:
+                    text.delete("1.0", END)
+                    progress_1["value"] = 0
+                    progress_2["value"] = 0
+                    progress_3["value"] = 0
+                    progress_4["value"] = 0
+                    progress_5["value"] = 0
+                    new = time.time()
+
+if __name__ == "__main__":
+#progress_bars
+    progress_1 = ttk.Progressbar(orient = HORIZONTAL, mode = 'determinate', length = 200, max = 255)
+    progress_2 = ttk.Progressbar(orient = HORIZONTAL, mode = 'determinate', length = 200, max = 255)
+    progress_3 = ttk.Progressbar(orient = HORIZONTAL, mode = 'determinate', length = 200, max = 255)
+    progress_4 = ttk.Progressbar(orient = HORIZONTAL, mode = 'determinate', length = 200, max = 255)
+    progress_5 = ttk.Progressbar(orient = HORIZONTAL, mode = 'determinate', length = 200, max = 255)
+
+#mainloop
+    gui.geometry('500x500')
+    gui.mainloop()
