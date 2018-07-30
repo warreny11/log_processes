@@ -9,9 +9,12 @@ try:
     if serial_object.is_open:
         print("Connected to " + port)
         serial_object.write(b'Connected')
-except:
-    print "Cant Open Specified Port"
 
-usrcmd = raw_input
-serial_object.write(usrcmd)
+        usrcmd = raw_input
+        serial_object.write(usrcmd)
+        
+except:
+    print "Can't Open Specified Port"
+
+
 
