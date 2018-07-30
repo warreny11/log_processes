@@ -1,17 +1,6 @@
 import os
 import sys
 import re
-import csv
-
-def database():
-    filename = 'db.csv'
-    with open(filename, 'rb') as f:
-        reader = csv.reader(f)
-        try:
-            for row in reader:
-                print row
-        except csv.Error as e:
-            sys.exit('file %s, line %d: %s' % (filename, reader.line_num, e))
 
 def data_sort(liveline):
     
@@ -26,11 +15,13 @@ def data_sort(liveline):
         data.append(brokendata[1])
         key.append(brokendata[0])
         
+        data[i] = int(data[i],16)
+
         if key[i] == "VB" :
-            print("Voltage :" + str(data[i]))
+            print("Voltage : " + str(data[i]*0.001+0))
 
         if key[i] == "PR" :
-            print("Presure :" + str(data[i]))
+            print("Presure : " + str(data[i]*1+0))
 
         #if key[i] == database :
             #print(database[] + str(data[i]))
