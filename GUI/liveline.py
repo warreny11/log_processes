@@ -22,6 +22,7 @@ def connect():
             else:
                 print 'no data'
             time.sleep(1) 
+            asd
 
 
 
