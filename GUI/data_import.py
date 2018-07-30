@@ -1,10 +1,9 @@
-def hex2ascii(hexnum):
+def hex2dec(hexnum):
     
-    num = hexnum.decode("hex")
+    num = int(hexnum,16)
     return num
 
 #data import apply conversion 
 
-
-hexnum = "7061756c"
-print hex2ascii(hexnum)
+test = "00003BB4"
+print hex2dec(test)
