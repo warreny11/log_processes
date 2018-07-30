@@ -1,14 +1,14 @@
 import serial
 import time
 
-port = raw_input("Enter Port Name: ")
-baud = raw_input("Enter Baud Rate: ")
+#port = raw_input("Enter Port Name: ")
+#baud = raw_input("Enter Baud Rate: ")
 
 def connect(): 
     global serial_object
     
     try:
-        serial_object = serial.Serial(str(port), baud)
+        serial_object = serial.Serial("/dev/tty.usbserial", 9600)
         serial_object.write(b'this is me')
     except:
         print "Cant Open Specified Port"
@@ -22,7 +22,8 @@ def connect():
             else:
                 print 'no data'
             time.sleep(1) 
-            
+
+print connect()
 
 
 
