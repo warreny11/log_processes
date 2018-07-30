@@ -6,9 +6,10 @@ baud = raw_input("Enter Baud Rate: ")
 
 def connect(): 
     global serial_object
-   
+    
     try:
         serial_object = serial.Serial(str(port), baud)
+        serial_object.write(b'this is me')
     except:
         print "Cant Open Specified Port"
 
@@ -21,5 +22,6 @@ def connect():
             else:
                 print 'no data'
             time.sleep(1) 
+
 
 
