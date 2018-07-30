@@ -1,11 +1,12 @@
 import serial
 import time
 
+port = raw_input("Enter Port Name: ")
+baud = raw_input("Enter Baud Rate: ")
+ 
 def connect(): 
     global serial_object
-    port = raw_input("Enter Port Name: ")
-    baud = raw_input("Enter Baud Rate: ") 
-        
+   
     try:
         serial_object = serial.Serial(str(port), baud)
     except:
