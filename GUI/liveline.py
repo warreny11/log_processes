@@ -3,7 +3,7 @@ import time
 
 port = raw_input("Enter Port Name: ")
 baud = raw_input("Enter Baud Rate: ")
- 
+
 def connect(): 
     global serial_object
    
@@ -20,5 +20,6 @@ def connect():
                 print data
             else:
                 print 'no data'
-            time.sleep(1)
+            time.sleep(1) 
+
 
