@@ -1,16 +1,23 @@
 import serial
 import sys 
 
-serial_object = serial.Serial("/dev/tty.usbserial", 9600)
+port = "/dev/tty.usbserial"
+baud = 9600
 
-usrexit = raw_input()
+serial_object = serial.Serial(port, baud)
 
 def disconnect(usrexit):
-    if usrexit == "e": 
-        try :   
+    if serial_object.isOpen():
+        print(serial_object.name + ' is open...')
+    
+    while True:
+        cmd = raw_input()
+        if cmd == "e":    
             print("exiting program and disconnecting from serial")
             serial_object.close() 
             sys.exit()
-        except :
-            print("still connected")
+        else:
+            serial_object(cmd.encode('ascii')+'\r\n')
+            out = serial_object()
+            print('Recieving...' + out)
 
