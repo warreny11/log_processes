@@ -7,13 +7,12 @@ baud = raw_input("Enter Baud Rate: ")
 
 def connect(a,b): 
     global serial_object
+    serial_object = serial.Serial(str(a), b)
+    if serial_object.is_open:
+        return 0
+    else:
+        return -1                                                      #0 is connected, -1 is not connected            
     
-    try:
-        serial_object = serial.Serial(str(a), b)
-        if serial_object.is_open:
-            return 0                                                      #0 is connected, -1 is not connected            
-    except:
-        return -1
 
 def commands():
 
