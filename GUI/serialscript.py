@@ -1,15 +1,20 @@
-from ser_interface import connect, commands
+from ser_interface import connect, commands, serial
 import re
 import time
-import data_sort
 
-port = raw_input("Enter Port Name: ")
-baud = raw_input("Enter Baud Rate: ")
+port = 1
+baud = 1
+
+if connect(port,baud)==-1:
+    port = raw_input("Enter Port Name: ")
+    baud = raw_input("Enter Baud Rate: ")
 
 connect(port,baud)
+
 if connect(port,baud)==0:
     print "Connected..."                                   #if connected
-    
+    serial_object = serial.Serial(port,baud)
+
     commands()
     if commands()==2:
         size = serial_object.inWaiting()
@@ -22,6 +27,11 @@ if connect(port,baud)==0:
 
 elif connect(port,baud)==-1:
     print "Connection not established..."
+
+
+    
+
+
 
 
     
