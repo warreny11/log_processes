@@ -23,7 +23,7 @@ def commands():
                 return 3
             
             elif cmd == "s":
-                return 4
+                return 0
 
             elif cmd == "e":    
                 print("exiting program and disconnecting from serial")    #e: exit hotkey

@@ -22,9 +22,11 @@ if connect(port,baud)==0:
                     time.sleep(1)
         
         elif commands() == 3:
-            while commands() ==3:
-                data = serial_object.read(size)
-                print data
+            while commands() == 3:
+                size = serial_object.inWaiting()
+                if size:
+                    data = serial_object.read(size)
+                    print data
             
     else: 
         print "Connection Broken..."
