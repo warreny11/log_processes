@@ -17,13 +17,15 @@ def connect():
 
     if serial_object.is_open:
         while True:
-            size = serial_object.inWaiting()
-            if size:
-                data = serial_object.read(size)
-                print data
-            else:
-                print 'no data'
-            time.sleep(1) 
+            cmd = raw_input()
+            if cmd == "print data":  
+                size = serial_object.inWaiting()
+                if size:
+                    data = serial_object.read(size)
+                    print data
+                else:
+                    print 'no data'
+                time.sleep(1) 
 
 print connect()
 
