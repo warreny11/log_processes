@@ -12,17 +12,10 @@ if connect(port,baud)==0:
     while connect(port,baud)==0:
 
         commands()
-        if commands()==2:
-            size = serial_object.inWaiting()
-            if size:
-                data = serial_object.read(size)
-                print data
-                if data == "":
-                    print 'no data...'                                       #no data, prints no data
-                    time.sleep(1)
+        a=0
         
-        elif commands() == 3:
-            while commands() == 3:
+        if a==3:
+            while a==3:
                 size = serial_object.inWaiting()
                 if size:
                     data = serial_object.read(size)

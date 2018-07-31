@@ -16,14 +16,19 @@ def commands():
     if serial_object.is_open:
         while True:
             cmd = raw_input()
+            a = 0
+            if cmd == " ":
+                serial_object.write("RN")
+                a = 2                                       #prints current data              
+                return a
 
-            if cmd == " ":                                       #prints current data              
-                return 2 
             elif cmd == "a":
-                return 3
+                a = 3
+                return a
             
             elif cmd == "s":
-                return 0
+                a = 0
+                return a
 
             elif cmd == "e":    
                 print("exiting program and disconnecting from serial")    #e: exit hotkey
