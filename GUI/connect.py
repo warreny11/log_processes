@@ -1,5 +1,6 @@
 import serial
 import time
+import sys
 
 port = raw_input("Enter Port Name: ")
 baud = raw_input("Enter Baud Rate: ")
@@ -26,6 +27,13 @@ def connect():
                 else:
                     print 'no data'
                 time.sleep(1) 
+
+            elif cmd == "e":    
+                print("exiting program and disconnecting from serial")
+                serial_object.close() 
+                sys.exit()
+            else:
+                serial_object.write(cmd)
 
 print connect()
 
