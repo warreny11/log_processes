@@ -17,8 +17,13 @@ def commands():
         while True:
             cmd = raw_input()
 
-            if cmd == "print data":                                       #prints current data              
+            if cmd == " ":                                       #prints current data              
                 return 2 
+            elif cmd == "a":
+                return 3
+            
+            elif cmd == "s":
+                return 4
 
             elif cmd == "e":    
                 print("exiting program and disconnecting from serial")    #e: exit hotkey
