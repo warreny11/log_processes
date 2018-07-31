@@ -2,14 +2,8 @@ from ser_interface import connect, commands, serial
 import re
 import time
 
-port = 1
-baud = 1
-
-if connect(port,baud)==-1:
-    port = raw_input("Enter Port Name: ")
-    baud = raw_input("Enter Baud Rate: ")
-
-connect(port,baud)
+port = raw_input("Enter Port Name: ")
+baud = raw_input("Enter Baud Rate: ")
 
 if connect(port,baud)==0:
     print "Connected..."                                   #if connected

@@ -2,9 +2,6 @@ import serial
 import time
 import sys
 
-port = raw_input("Enter Port Name: ")
-baud = raw_input("Enter Baud Rate: ")
-
 def connect(a,b): 
     global serial_object
     serial_object = serial.Serial(str(a), b)
