@@ -8,16 +8,19 @@ baud = raw_input("Enter Baud Rate: ")
 if connect(port,baud)==0:
     print "Connected..."                                   #if connected
     serial_object = serial.Serial(port,baud)
+    while connect(port,baud)==0:
 
-    commands()
-    if commands()==2:
-        size = serial_object.inWaiting()
-        if size:
-            data = serial_object.read(size)
-            print data
-        else:
-            print 'no data'                                       #no data, prints no data
-            time.sleep(1)
+        commands()
+        if commands()==2:
+            size = serial_object.inWaiting()
+            if size:
+                data = serial_object.read(size)
+                print data
+            else:
+                print 'no data...'                                       #no data, prints no data
+                time.sleep(1)
+    else: 
+        print "Connection Broken..."
 
 elif connect(port,baud)==-1:
     print "Connection not established..."
