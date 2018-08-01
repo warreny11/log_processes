@@ -26,12 +26,3 @@ if connect(port,baud)==0:
 
 elif connect(port,baud)==-1:
     print "Connection not established..."
-
-
-    
-
-
-
-
-    
-
