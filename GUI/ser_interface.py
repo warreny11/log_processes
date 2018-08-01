@@ -13,23 +13,21 @@ def connect(a,b):
 
 def commands():
 
-    if serial_object.is_open:
-        while True:
+    while serial_object.is_open:
             cmd = raw_input()
-            a = 0
-            if cmd == " ":
-                serial_object.write("RN")
-                a = 2                                       #prints current data              
-                
-
-            elif cmd == "a":
-                a = 3
-                
             
-            elif cmd == "s":
-                a = 0
+            if cmd == " ":
+                serial_object.write("RN")                                       #prints current data              
                 
-
+            elif cmd == "a":
+                while(1):
+                    size = serial_object.inWaiting()
+                    if size:
+                        data = serial_object.read(size)
+                        print data
+                    if cmd == "s":
+                        break
+                
             elif cmd == "e":    
                 print("exiting program and disconnecting from serial")    #e: exit hotkey
                 serial_object.close() 
