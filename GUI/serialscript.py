@@ -8,7 +8,7 @@ if debug == 0:
     baud = raw_input("Enter Baud Rate: ")
 
 if debug == 1:
-    port = "dev/tty.usbserial"
+    port = "/dev/tty.usbserial"
     baud = 9600
 
 if connect(port,baud)==0:
