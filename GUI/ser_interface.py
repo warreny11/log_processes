@@ -20,7 +20,7 @@ def commands():
                 serial_object.write("RN")                                       #prints current data              
                 
             elif cmd == "a":
-                while(1):
+                while True:
                     size = serial_object.inWaiting()
                     if size:
                         data = serial_object.read(size)
