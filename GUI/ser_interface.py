@@ -7,6 +7,7 @@ from data_sort import convert
 
 
 def connect(a,b): 
+
     global serial_object
     serial_object = serial.Serial(str(a), b)
     while serial_object.is_open:
@@ -23,21 +24,27 @@ def commands():
             if cmd == " ":
                 print("updating data\n")
                 serial_object.write("RN")
-                livedata = serial_object.read()
-                print convert(livedata)
-                
+                if serial_object.in_waiting:
+                    livedata = serial_object.read()
+                    print convert(livedata)
+                else:
+                    print("no data")
+                    cmd = raw_input()
                                                                  
                 
             elif cmd == "a":
                 print("entering auto printout\n")
-                while True:
-                    size = serial_object.inWaiting()
-                    if size:
+                size = serial_object.inWaiting()
+                if size:
+                    while True:
                         livedata = serial_object.read(size)
                         print convert(livedata)
-                    cmd = raw_input()
-                    if cmd == "s":
-                        break
+                            
+                    else : 
+                        print "no data"
+                        cmd = raw_input()
+                if cmd == "s":
+                    break
                     
                 
             elif cmd == "e":    
