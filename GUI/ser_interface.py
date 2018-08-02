@@ -39,12 +39,10 @@ def commands():
                     while True:
                         livedata = serial_object.read(size)
                         print convert(livedata)
-                            
-                    else : 
-                        print "no data"
+            
                         cmd = raw_input()
-                if cmd == "s":
-                    break
+                    if cmd == "s":
+                        break
                     
                 
             elif cmd == "e":    
