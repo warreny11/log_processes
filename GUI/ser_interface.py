@@ -27,8 +27,8 @@ def commands():
                 while True:
                     size = serial_object.inWaiting()
                     if size:
-                        data = serial_object.read(size)
-                        print convert(data)
+                        livedata = serial_object.read(size)
+                        print convert(livedata)
                     
                     if cmd == "s":
                         break
