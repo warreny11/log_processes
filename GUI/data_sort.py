@@ -18,13 +18,13 @@ def convert(liveline):
         data[i] = int(data[i],16)
 
         if key[i] == "VB" :
-            print("Voltage : " + str(data[i]*0.001+0))
+            print("Voltage : " + str(data[i]*0.001+0) + " Volts")
 
         if key[i] == "PR" :
-            print("Presure : " + str(data[i]*1+0))
+            print("Presure : " + str(data[i]*1+0) + " Pascals")
 
         if key[i] == "IP" :
-            print("Internal Presure : " + str((data[i]*.25+0)*0.00750062))
+            print("Internal Presure : " + str((data[i]*.25+0)*0.00750062) + " mm of mercury")
 
 #wish list: db connection to data_sort for pulling the 
 
