@@ -2,6 +2,7 @@ import serial
 import time
 import sys
 
+
 def connect(a,b): 
     global serial_object
     serial_object = serial.Serial(str(a), b)
@@ -12,7 +13,7 @@ def connect(a,b):
     
 
 def commands():
-
+    global serial_object
     while serial_object.is_open:
             cmd = raw_input()
             
@@ -27,6 +28,7 @@ def commands():
                         print data
                     if cmd == "s":
                         break
+                    
                 
             elif cmd == "e":    
                 print("exiting program and disconnecting from serial")    #e: exit hotkey

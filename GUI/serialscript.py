@@ -1,15 +1,12 @@
 from ser_interface import connect, commands, serial
 import re
 import time
-debug = 1
+import sys
 
-if debug == 0:
-    port = raw_input("Enter Port Name: ")
-    baud = raw_input("Enter Baud Rate: ")
 
-if debug == 1:
-    port = "/dev/tty.usbserial"
-    baud = 9600
+
+port = raw_input("Enter Port Name: ")
+baud = raw_input("Enter Baud Rate: ")
 
 if connect(port,baud)==0:
     print "Connected..." 
@@ -18,9 +15,26 @@ if connect(port,baud)==0:
     while connect(port,baud)==0:
 
         commands()
+        a=0
+        
+        if a==3:
+            while a==3:
+                size = serial_object.inWaiting()
+                if size:
+                    data = serial_object.read(size)
+                    print data
             
     else: 
         print "Connection Broken..."
 
 elif connect(port,baud)==-1:
     print "Connection not established..."
+
+
+    
+
+
+
+
+    
+
