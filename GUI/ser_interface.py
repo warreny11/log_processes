@@ -1,6 +1,9 @@
 import serial
 import time
 import sys
+import os
+import re
+from data_sort import convert
 
 
 def connect(a,b): 
@@ -25,7 +28,7 @@ def commands():
                     size = serial_object.inWaiting()
                     if size:
                         data = serial_object.read(size)
-                        print data
+                        print convert(data)
                     
                     if cmd == "s":
                         break

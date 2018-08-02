@@ -15,26 +15,10 @@ if connect(port,baud)==0:
     while connect(port,baud)==0:
 
         commands()
-        a=0
-        
-        if a==3:
-            while a==3:
-                size = serial_object.inWaiting()
-                if size:
-                    data = serial_object.read(size)
-                    print data
+
             
     else: 
         print "Connection Broken..."
 
 elif connect(port,baud)==-1:
     print "Connection not established..."
-
-
-    
-
-
-
-
-    
-
