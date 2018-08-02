@@ -24,7 +24,7 @@ def commands():
             if cmd == " ":
                 print("updating data\n")
                 serial_object.write("RN")
-                if serial_object.in_waiting:
+                if serial_object.in_waiting(3):
                     livedata = serial_object.read()
                     print convert(livedata)
                 else:
@@ -39,7 +39,7 @@ def commands():
                     while True:
                         livedata = serial_object.read(size)
                         print convert(livedata)
-                        cmd = raw_input()
+                        
                     else : 
                         "leaving auto printout mode"
                     
