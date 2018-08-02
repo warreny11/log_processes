@@ -24,6 +24,7 @@ def commands():
                 serial_object.write("RN")
                 livedata = serial_object.read()
                 print convert(livedata)
+                
                                                                  
                 
             elif cmd == "a":
@@ -32,7 +33,7 @@ def commands():
                     if size:
                         livedata = serial_object.read(size)
                         print convert(livedata)
-                    
+                    cmd = raw_input()
                     if cmd == "s":
                         break
                     
