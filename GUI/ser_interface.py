@@ -26,6 +26,7 @@ def commands():
                     if size:
                         data = serial_object.read(size)
                         print data
+                    
                     if cmd == "s":
                         break
                     
