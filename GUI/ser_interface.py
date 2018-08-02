@@ -24,7 +24,7 @@ def commands():
             if cmd == " ":
                 print("updating data\n")
                 serial_object.write("RN")
-                if serial_object.in_waiting(3):
+                if serial_object.in_waiting():
                     livedata = serial_object.read()
                     print convert(livedata)
                 else:
