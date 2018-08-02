@@ -33,7 +33,7 @@ def commands():
                                                                  
                 
             elif cmd == "a":
-                print("entering auto printout\n")
+                print("entering auto printout mode\n")
                 size = serial_object.inWaiting()
                 if size:
                     while True:
@@ -42,6 +42,7 @@ def commands():
                         cmd = raw_input()
                     
                     if cmd == "s":
+                        print "leaving auto printout mode"
                         break
                     
                 
