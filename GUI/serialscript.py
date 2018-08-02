@@ -3,6 +3,8 @@ import re
 import time
 debug = 1
 
+serial_object = None
+
 if debug == 0:
     port = raw_input("Enter Port Name: ")
     baud = raw_input("Enter Baud Rate: ")
@@ -14,9 +16,9 @@ if debug == 1:
 if connect(port,baud)==0:
     print "Connected..." 
     print "To print updated data, press spacebar\nTo switch to auto mode, press a\nTo disconnect and exit, press e"                                  #if connected
-    serial_object = serial.Serial(port,baud)
+    
     while connect(port,baud)==0:
-
+        cmd = raw_input()
         commands()
             
     else: 
