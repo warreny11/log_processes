@@ -39,9 +39,10 @@ def commands():
                     while True:
                         livedata = serial_object.read(size)
                         print convert(livedata)
+
                         
-                    else : 
-                        "leaving auto printout mode"
+                else : 
+                    print("no data")
                     
                     
                 
