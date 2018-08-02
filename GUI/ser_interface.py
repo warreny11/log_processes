@@ -21,7 +21,10 @@ def commands():
             cmd = raw_input()
             
             if cmd == " ":
-                serial_object.write("RN")                                       #prints current data              
+                serial_object.write("RN")
+                livedata = serial_object.read()
+                print convert(livedata)
+                                                                 
                 
             elif cmd == "a":
                 while True:
