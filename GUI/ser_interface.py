@@ -40,10 +40,9 @@ def commands():
                         livedata = serial_object.read(size)
                         print convert(livedata)
                         cmd = raw_input()
+                    else : 
+                        "leaving auto printout mode"
                     
-                    if cmd == "s":
-                        print "leaving auto printout mode"
-                        break
                     
                 
             elif cmd == "e":    
