@@ -18,40 +18,40 @@ def connect(a,b):
 
 def commands():
     global serial_object
-    while serial_object.is_open:
+    
+    cmd = raw_input()
+        
+    if cmd == " ":
+        print("updating data\n")
+        serial_object.write("RN")
+        if serial_object.in_waiting():
+            livedata = serial_object.read()
+            print convert(livedata)
+        else:
+            print("no data")
             cmd = raw_input()
+                                                        
+        
+    elif cmd == "a":
+        print("entering auto printout mode\n")
+        size = serial_object.inWaiting()
+        if size:
+            livedata = serial_object.read(size)
+            print convert(livedata)
+
+                
+        else : 
+            print("no data")
             
-            if cmd == " ":
-                print("updating data\n")
-                serial_object.write("RN")
-                if serial_object.in_waiting():
-                    livedata = serial_object.read()
-                    print convert(livedata)
-                else:
-                    print("no data")
-                    cmd = raw_input()
-                                                                 
-                
-            elif cmd == "a":
-                print("entering auto printout mode\n")
-                size = serial_object.inWaiting()
-                if size:
-                    livedata = serial_object.read(size)
-                    print convert(livedata)
+            
+        
+    elif cmd == "e":    
+        print("exiting program and disconnecting from serial")    #e: exit hotkey
+        serial_object.close() 
+        sys.exit()
 
-                        
-                else : 
-                    print("no data")
-                    
-                    
-                
-            elif cmd == "e":    
-                print("exiting program and disconnecting from serial")    #e: exit hotkey
-                serial_object.close() 
-                sys.exit()
-
-            else:                                                         #all other commands are sent to serial
-                serial_object.write(cmd)
+    else:                                                         #all other commands are sent to serial
+        serial_object.write(cmd)
 
 
 
