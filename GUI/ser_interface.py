@@ -36,9 +36,8 @@ def commands():
                 print("entering auto printout mode\n")
                 size = serial_object.inWaiting()
                 if size:
-                    while True:
-                        livedata = serial_object.read(size)
-                        print convert(livedata)
+                    livedata = serial_object.read(size)
+                    print convert(livedata)
 
                         
                 else : 

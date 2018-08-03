@@ -17,7 +17,5 @@ while True:
         serial_object.close() 
         sys.exit()
     else:
-        serial_object(cmd.encode('ascii')+'\r\n')
-        out = serial_object()
-        print('Recieving...' + out)
+        serial_object.write(cmd)
 
