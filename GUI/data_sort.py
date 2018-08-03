@@ -15,16 +15,23 @@ def convert(liveline):
         data.append(brokendata[1])
         key.append(brokendata[0])
         
-        data[i] = int(data[i],16)
+        try:
+            data[i] = int(data[i],16)
+            err = ""
+        except:
+            data[i] = 0
+            err = "NaN"
+    
 
-        if key[i] == "VB" :
-            print("Voltage : " + str(data[i]*0.001+0) + " Volts")
+        if key[i] == "VB" :    
+            print("Voltage : " + str(data[i]*0.001+0) + err + " Volts")
+            
 
         if key[i] == "PR" :
-            print("Presure : " + str(data[i]*1+0) + " Pascals")
+            print("Pressure : " + str(data[i]*1+0) + err + " Pascals")
 
         if key[i] == "IP" :
-            print("Internal Presure : " + str((data[i]*.25+0)*0.00750062) + " mm of mercury")
+            print("Internal Pressure : " + str((data[i]*.25+0)*0.00750062) + err + " mm of mercury")
 
 #wish list: db connection to data_sort for pulling the 
 
