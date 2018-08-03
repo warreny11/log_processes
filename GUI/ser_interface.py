@@ -6,6 +6,8 @@ import re
 from data_sort import convert
 
 
+cmdstate = ""
+
 def connect(a,b): 
 
     global serial_object
@@ -16,11 +18,14 @@ def connect(a,b):
         return -1                                                      #0 is connected, -1 is not connected            
     
 
+
 def commands():
     global serial_object
     
+    
     cmd = raw_input()
-        
+
+
     if cmd == " ":
         print("updating data\n")
         serial_object.write("RN")
@@ -34,14 +39,8 @@ def commands():
         
     elif cmd == "a":
         print("entering auto printout mode\n")
-        size = serial_object.inWaiting()
-        if size:
-            livedata = serial_object.read(size)
-            print convert(livedata)
-
-                
-        else : 
-            print("no data")
+        cmdstate = "autoprint"
+     
             
             
         
@@ -53,7 +52,7 @@ def commands():
     else:                                                         #all other commands are sent to serial
         serial_object.write(cmd)
 
-
+    return cmdstate
 
 
 
