@@ -5,6 +5,10 @@ import os
 import re
 from data_sort import convert
 
+class commandline(object):
+    def __init__(self, my_input):
+        self.my_input = raw_input
+
 
 cmdstate = ""
 
