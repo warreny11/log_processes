@@ -19,4 +19,3 @@ def Autoprint():
             convert(rxstr)
             rxstr = ''
     
-autoprintser()

@@ -8,8 +8,8 @@ baud = 9600
 
 ser = serial.Serial(port, baud)
 
-class commandline(object):
-    def __init__(self, my_input = ""):
+class commandline:
+    def __init__(self, my_input):
         self.my_input = my_input
     
     def commandin(self, my_input):
