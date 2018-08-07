@@ -25,14 +25,14 @@ def convert(liveline):
     
 
         if key[i] == "VB" :    
-            print("Voltage : " + str(data[i]*0.001+0) + err + " Volts")
+            print '{0}\r'.format("Voltage : " + str(data[i]*0.001+0) + err + " Volts")
             
 
         if key[i] == "PR" :
-            print("Pressure : " + str(data[i]*1+0) + err + " Pascals")
+            print '{0}\r'.format("Pressure : " + str(data[i]*1+0) + err + " Pascals")
 
         if key[i] == "IP" :
-            print("Internal Pressure : " + str((data[i]*.25+0)*0.00750062) + err + " mm of mercury")
+            print '{0}\r'.format("Internal Pressure : " + str((data[i]*.25+0)*0.00750062) + err + " mm of mercury")
         
     
 
