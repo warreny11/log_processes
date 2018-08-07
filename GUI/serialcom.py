@@ -12,11 +12,6 @@ ser = serial.Serial(port, baud)
 
 cmdstate = ""
 
-class commandline(object):
-    def __init__(self, my_input):
-        commandline.my_input = raw_input()
-
-
 def connect(a,b): 
     
     
@@ -26,14 +21,19 @@ def connect(a,b):
     else:
         return -1                                                      #0 is connected, -1 is not connected            
     
+class commandline(object):
+    def __init__(self):
+        self.my_input = raw_input()
+
 def commands():
-    
+
+    test = commandline()
                                                                 
-    if commandline.my_input== "a":
+    if test.my_input== "a":
         print("entering auto printout mode\n")
         cmdstate = "autoprint"
      
-    if commandline.my_input== "e":    
+    if test.my_input== "e":    
         cmdstate = "exiting"
 
     else :

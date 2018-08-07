@@ -2,11 +2,13 @@ from serialcom import connect, commands, serial, commandline
 import re
 import time
 import sys
-from autoprint import autoprint
+from autoprint import autoprintser
 from commandinput import commandin
 from exiting import leave
 
 debug = 1
+
+
 
 if debug == 1:
     port = "/dev/tty.usbserial"
@@ -26,9 +28,9 @@ if connect(port,baud)==0:
         
         cmdauto = commands()
         if cmdauto == "autoprint":
-            autoprint()
+            autoprintser()
         if cmdauto == "commandin":
-            commandin(commandline.my_input)
+            commandin(my_input)
         if cmdauto == "exiting":
             leave()
             
