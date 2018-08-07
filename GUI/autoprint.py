@@ -6,7 +6,7 @@ baud = 9600
 
 ser = serial.Serial(port, baud)
 
-def autoprintser():
+def Autoprint():
     rxstr = ''
     while (1):
         
