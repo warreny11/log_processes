@@ -2,10 +2,13 @@ import serial
 from autoprint import Autoprint,serwrite
 from exiting import leave
 
-class Connection:
+debug = 0
+
+class Connection():
     def __init__(self,port,baud):
-        self.port = "/dev/tty.usbserial"
-        self.baud = 9600
+        self.port = port
+        self.baud = baud
+        print "Initializing Connection..."
 
     def connect(self,a,b):
         self.ser = serial.Serial(str(a), b)
@@ -15,32 +18,33 @@ class Connection:
             return -1   
 
 
-class Commands(Connection):
+class Commands():
     def __init__(self,my_input):
-        self.my_input = raw_input
-        
+        self.my_input = my_input
+        if debug==1:
+            print "Initializing Commands"
         
         
     def commands(self,my_input):    
         if my_input == "a":
-            commandstate = "auto"
             print "Entering Auto-update Mode..."
-        if my_input == "e":
-            commandstate = "exit"
-            print "Exiting..."
-        else :
-            commandstate = "free"
-    
-    def commandinterpreter(self,commandstate):
-        if commandstate == "auto":
             Autoprint()
-        if commandstate == "exit":
+                    
+        if my_input == "e":
+            print "Exiting..."
             leave()
-        if commandstate == "free":
-            serwrite(self.my_input)
 
-    while connect==0:
-        self.commands(self.my_input)
+        else :
+            serwrite(my_input)
+        
+
+
+    
+
+
+
+
+            
     
 
     

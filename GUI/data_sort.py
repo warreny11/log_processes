@@ -27,7 +27,6 @@ def convert(liveline):
         if key[i] == "VB" :    
             print '{0}\r'.format("Voltage : " + str(data[i]*0.001+0) + err + " Volts")
             
-
         if key[i] == "PR" :
             print '{0}\r'.format("Pressure : " + str(data[i]*1+0) + err + " Pascals")
 
