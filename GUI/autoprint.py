@@ -18,4 +18,7 @@ def Autoprint():
         if out == ';':
             convert(rxstr)
             rxstr = ''
-    
+
+def serwrite(my_input):
+    ser.write(my_input)
+
