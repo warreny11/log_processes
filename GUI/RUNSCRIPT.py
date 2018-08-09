@@ -1,6 +1,19 @@
-from SCRIPT import Connection
 from data_sort import convert
 import sys 
+import serial
+
+class Connection():
+    def __init__(self,port,baud):
+        self.port = port
+        self.baud = baud
+        print "Initializing Connection..."
+
+    def connect(self):
+        self.ser = serial.Serial(str(port), baud)
+        while self.ser.is_open:
+            return 0
+        else:
+            return -1
 
 print "help"
 port = "/dev/tty.usbserial"
@@ -8,11 +21,11 @@ baud = 9600
 
 print "Hello"
 my_SL1_connection = Connection(port,baud)
-#my_SL1_connection.connect(port,baud)
-#print my_SL1_connection.ser
+my_SL1_connection.connect()
+print my_SL1_connection
 
-#if my_SL1_connection.connect(port,baud)==0:
-#    print "Connected..."
+if my_SL1_connection.connect()==0:
+    print "Connected..."
 
 def Autoprint():
     
@@ -42,7 +55,7 @@ def commands(my_input):
         else :
             my_SL1_connection.ser.write(my_input)
     
-while my_SL1_connection.connect(port,baud)==0:
+while my_SL1_connection.ser.is_open:
     commands(raw_input())
     
 
