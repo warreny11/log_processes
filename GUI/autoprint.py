@@ -1,22 +1,9 @@
 import serial
+from SCRIPT import Connection
 from data_sort import convert
 
-def connect():
-    port = "/dev/tty.usbserial"
-    baud = 9600
-
-    ser = serial.Serial(str(port), baud)
-    if ser.is_open():
-        print "Connected..."
-
-    while ser.is_open:
-            return 0
-    else:
-        return -1   
-        
-connect()
-
 def Autoprint():
+    ser = Connection.connect()
     rxstr = ''
     while (1):
         
@@ -30,5 +17,6 @@ def Autoprint():
             rxstr = ''
 
 def serwrite(my_input):
+    ser = connect()
     ser.write(my_input)
 
