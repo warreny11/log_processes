@@ -5,14 +5,14 @@ from data_sort import convert
 debug = 0
 
 class Connection():
-    def __init__(self,port,baud,ser):
+    def __init__(self,port,baud):
         self.port = port
         self.baud = baud
-        self.ser = ser
+        
         
         print "Initializing Connection..."
 
-    def connect(self,port,baud,ser):
+    def connect(self,port,baud):
         
         self.ser = serial.Serial(str(port), baud)
         while self.ser.is_open:
@@ -21,11 +21,10 @@ class Connection():
             return -1   
     
 class InsideCommands(Connection):
-    def __init__(self,port,baud,ser):
-        Connection.__init__(self,port,baud,ser)
+    def __init__(self,port,baud,ser,my_input):
+        Connection.__init__(self,port,baud)
+        self.ser = Connection.connect(self.port,baud)
     
-
-
     def Autoprint(self):
         rxstr = ''
         while (1):
@@ -40,7 +39,7 @@ class InsideCommands(Connection):
                 rxstr = ''
 
     def serwrite(self,my_input):
-        serial.write(my_input)
+        self.ser.write(my_input)
 
 class Commands(InsideCommands):
     def __init__(self,my_input):

@@ -1,6 +1,7 @@
 import os
 import sys
 import re
+debug = 1
 
 def convert(liveline):
     
@@ -23,17 +24,21 @@ def convert(liveline):
             data[i] = 0
             err = "NaN"
     
+        if debug == 0:
+            if key[i] == "VB" :    
+                print '{0}\r'.format("Voltage : " + str(data[i]*0.001+0) + err + " Volts")
+                
+            if key[i] == "PR" :
+                print '{0}\r'.format("Pressure : " + str(data[i]*1+0) + err + " Pascals")
 
-        if key[i] == "VB" :    
-            print '{0}\r'.format("Voltage : " + str(data[i]*0.001+0) + err + " Volts")
-            
-        if key[i] == "PR" :
-            print '{0}\r'.format("Pressure : " + str(data[i]*1+0) + err + " Pascals")
-
-        if key[i] == "IP" :
-            print '{0}\r'.format("Internal Pressure : " + str((data[i]*.25+0)*0.00750062) + err + " mm of mercury")
+            if key[i] == "IP" :
+                print '{0}\r'.format("Internal Pressure : " + str((data[i]*.25+0)*0.00750062) + err + " mm of mercury")
         
-    
+        if debug == 1:
+            
+            print '{0}\r'.format("Data : " + str(data[i]*0.001+0) + err + " datum")
+
+
 
 #wish list: db connection to data_sort for pulling the 
 

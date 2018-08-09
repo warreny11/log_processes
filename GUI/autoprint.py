@@ -1,10 +1,20 @@
 import serial
 from data_sort import convert
 
-port = "/dev/tty.usbserial"
-baud = 9600
+def connect():
+    port = "/dev/tty.usbserial"
+    baud = 9600
 
-ser = serial.Serial(port, baud)
+    ser = serial.Serial(str(port), baud)
+    if ser.is_open():
+        print "Connected..."
+
+    while ser.is_open:
+            return 0
+    else:
+        return -1   
+        
+connect()
 
 def Autoprint():
     rxstr = ''
