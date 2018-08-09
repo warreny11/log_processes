@@ -8,7 +8,7 @@ class Connection():
         self.baud = baud
         print "Initializing Connection..."
 
-    def connect(self,port,baud):
+    def connect(self):
         self.ser = serial.Serial(str(port), baud)
         while self.ser.is_open:
             return 0
