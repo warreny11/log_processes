@@ -1,5 +1,4 @@
 import serial
-from SCRIPT import Connection
 from data_sort import convert
 
 def Autoprint():
