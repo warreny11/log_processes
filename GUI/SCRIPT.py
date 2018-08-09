@@ -1,5 +1,5 @@
 import serial
-from autoprint import Autoprint,serwrite
+from RUNSCRIPT import Autoprint, serwrite
 from exiting import leave
 
 debug = 0
