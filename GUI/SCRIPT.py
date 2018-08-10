@@ -25,9 +25,11 @@ class Connection():
         
         if my_input == "a":
             commandstatus = "auto"
+            print "Entering Auto-update Mode..."
             
         elif my_input == "e":
             commandstatus = "exit"
+            print "Exiting program and Disconnecting from Serial"
 
         else:
             commandstatus = "free"
@@ -40,16 +42,9 @@ class Connection():
         commandstatus = self.commands(self.my_input)
 
         if commandstatus == "auto":
-            print "Entering Auto-update Mode..."
-            while True:
-                self.Autoprint()
-                if self.my_input=="s":
-                    print "Exiting Auto-update Mode..."
-                    break
-                
-
+            self.Autoprint()
+            
         if commandstatus == "exit":
-            print "Exiting program and Disconnecting from Serial"   #e: exit hotkey
             self.ser.close() 
             sys.exit()
 
@@ -61,8 +56,7 @@ class Connection():
         out = ''
         out += self.ser.read()
         self.rxstr += out
-        #if out != '':
-    #            print (out)
+        
         if out == ';':
             print(convert(self.rxstr))
             self.rxstr = ''
