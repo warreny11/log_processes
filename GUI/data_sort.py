@@ -25,7 +25,7 @@ def convert(liveline):
         except:
             data[i] = 0
             err = "NaN"
-            return err
+            return data[i]
         
 
 #         if debug == 0:

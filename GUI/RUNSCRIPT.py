@@ -10,7 +10,7 @@ if Connect_status==0:
 
 while Connect_status==0:
     my_SL1_connection.executecommand(raw_input())
-    print my_SL1_connection.my_input
+    
 
 
 

@@ -1,21 +1,21 @@
 import serial
 from data_sort import convert
 
+port = "/dev/tty.usbserial"
+baud = 9600
+
+ser = serial.Serial(port,baud)
+
+ 
+
 def Autoprint():
-    ser = Connection.connect()
     rxstr = ''
-    while (1):
-        
+    while(1):
         out = ''
         out += ser.read()
         rxstr += out
-        #if out != '':
-#            print (out)
         if out == ';':
-            convert(rxstr)
+            print(convert(rxstr))
             rxstr = ''
 
-def serwrite(my_input):
-    ser = connect()
-    ser.write(my_input)
-
+Autoprint()

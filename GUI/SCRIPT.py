@@ -7,10 +7,11 @@ port = "/dev/tty.usbserial"
 baud = 9600
 
 class Connection():
-
+    
     def __init__(self,port,baud):
         self.port = port
         self.baud = baud
+        self.rxstr = ""
         print "Initializing Connection..."
 
     def connect(self):
@@ -40,8 +41,12 @@ class Connection():
 
         if commandstatus == "auto":
             print "Entering Auto-update Mode..."
-            while commandstatus == "auto":
+            while True:
                 self.Autoprint()
+                if self.my_input=="s":
+                    print "Exiting Auto-update Mode..."
+                    break
+                
 
         if commandstatus == "exit":
             print "Exiting program and Disconnecting from Serial"   #e: exit hotkey
@@ -49,18 +54,17 @@ class Connection():
             sys.exit()
 
         if commandstatus == "free":
-            self.ser.write(my_input)
+            self.ser.write(self.my_input)
 
     def Autoprint(self):
-
-        rxstr = ''
+        
         out = ''
         out += self.ser.read()
-        rxstr += out
+        self.rxstr += out
         #if out != '':
     #            print (out)
         if out == ';':
-            print(convert(rxstr))
-            rxstr = ''
+            print(convert(self.rxstr))
+            self.rxstr = ''
 
 
