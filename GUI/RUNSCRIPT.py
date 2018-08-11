@@ -8,8 +8,12 @@ Connect_status = my_SL1_connection.connect()
 if Connect_status==0:
     print "Connected..."
 
-while Connect_status==0:
-    my_SL1_connection.executecommand(raw_input())
+
+my_SL1_connection.executecommand(raw_input())
+    
+            
+
+    
 
     
 

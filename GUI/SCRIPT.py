@@ -38,23 +38,26 @@ class Connection():
         
     def executecommand(self,my_input):
         self.my_input = my_input
-    
+
+        commandstatus = "start"
         commandstatus = self.commands(self.my_input)
 
         if commandstatus == "auto":
-            self.Autoprint()
-            
+            out = ''
+            out += self.ser.read()
+            self.Autoprint(out)
+                  
         if commandstatus == "exit":
             self.ser.close() 
             sys.exit()
 
         if commandstatus == "free":
             self.ser.write(self.my_input)
-
-    def Autoprint(self):
         
-        out = ''
-        out += self.ser.read()
+        commandstatus = "start"
+        return commandstatus 
+
+    def Autoprint(self,out):
         self.rxstr += out
         
         if out == ';':
