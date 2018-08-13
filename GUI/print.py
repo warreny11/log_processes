@@ -4,21 +4,19 @@ from data_sort import convert
 port = "/dev/tty.usbserial"
 baud = 9600
 
-serial_object = serial.Serial(port, baud)
-
-
+ser = serial.Serial(port, baud)
 
 def autoprint():
+    rxstr = ''
+    while (1):
+        
+        out = ''
+        out += ser.read()
+        rxstr += out
+        #if out != '':
+#            print (out)
+        if out == ';':
+            convert(rxstr)
+            rxstr = ''
     
-
-
-        
-        
-        size = serial_object.inWaiting()
-        if size:
-            
-            livedata = serial_object.read(size)
-            print convert(livedata)
-
-        else : 
-            print("no data")
+autoprint()
