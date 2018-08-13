@@ -1,6 +1,9 @@
 import serial
 import time
-from SCRIPT import Connection,port,baud
+from SCRIPT import Connection
+
+port = "/dev/tty.usbserial"
+baud = 9600
 
 my_SL1_connection = Connection(port,baud)
 Connect_status = my_SL1_connection.connect()

@@ -3,8 +3,8 @@ import sys
 from data_sort import convert
 import serial
 
-port = "/dev/tty.usbserial"
-baud = 9600
+#port = "/dev/tty.usbserial"
+#baud = 9600
 
 class Connection():
     
@@ -15,7 +15,7 @@ class Connection():
         print "Initializing Connection..."
 
     def connect(self):
-        self.ser = serial.Serial(str(port), baud)
+        self.ser = serial.Serial(str(self.port), self.baud)
         while self.ser.is_open:
             return 0
         else:
