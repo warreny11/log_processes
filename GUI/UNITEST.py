@@ -37,6 +37,7 @@ class SeatrecControlHub(tk.Tk):
 
 def connect():
     print "hey"
+    
 
 class StartPage(tk.Frame):
 
@@ -44,6 +45,12 @@ class StartPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         label = tk.Label(self,text = "Start Page", font = LARGE_FONT)
         label.pack(pady=10,padx=10)
+
+        
+        radio_1 = ttk.Radiobutton(text = "Windows", variable = button_var, value = 1).place(x = 10, y = 315)
+        radio_2 = ttk.Radiobutton(text = "Linux", variable = button_var, value = 2).place(x = 110, y = 315)
+        radio_3 = ttk.Radiobutton(text = "Mac", variable = button_var, value = 3).place(x = 210, y = 315)
+
 
         connectbutton = ttk.Button(self, text="Connect", command=connect)
         connectbutton.pack()
@@ -55,10 +62,13 @@ class Seatrec_Control_Hub(tk.Frame):
         label = tk.Label(self,text = "Seatrec Control Hub", font = LARGE_FONT)
         label.pack(pady=10,padx=10)
 
-        connectbutton = ttk.Button(self, text="Reconnect", command=lambda: controller.show_frame(StartPage))
-        connectbutton.pack()
+
+
+        reconnectbutton = ttk.Button(self, text="Reconnect", command=lambda: controller.show_frame(StartPage))
+        reconnectbutton.pack()
 
 app = SeatrecControlHub()
+app.geometry("1280x720")
 app.mainloop()
 
 
