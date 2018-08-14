@@ -4,23 +4,45 @@ import Tkinter as tk
 import ttk
 
 LARGE_FONT = ("Verdana", 12)
+NORM_FONT = ("Helvetica", 10)
+SMALL_FONT = ("Helvetica", 8)
+
+def popupmsg(msg):
+    popup = tk.Tk()
+    popup.wm_title("!")
+    label = ttk.Label(popup, text=msg, font=NORM_FONT)
+    label.pack(side="top", fill="x", pady=10)
+    B1 = ttk.Button(popup, text="Okay", command = popup.destroy)
+    B1.pack()
+    popup.mainloop()
 
 class SeatrecControlHub(tk.Tk):
 
     def __init__(self,*args,**kwargs):
         
         tk.Tk.__init__(self, *args, **kwargs)
+
         try:
             tk.Tk.iconbitmap(self, default="seatrec_LQ1_icon.ico")
         except:
+            # tk.Tk.iconbitmap(self, default="seatrec (1).png")
             pass
-            
+
         tk.Tk.wm_title(self, "Seatrec Control Hub")
 
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0,weight=1)
         container.grid_columnconfigure(0,weight=1)
+
+        menubar = tk.Menu(container)
+        filemenu = tk.Menu(menubar, tearoff=0)
+        filemenu.add_command(label="Save settings", command = lambda: popupmsg("Not supported just yet!"))
+        filemenu.add_separator()
+        filemenu.add_command(label="Exit", command=quit)
+        menubar.add_cascade(label="File", menu=filemenu)
+
+        tk.Tk.config(self, menu=menubar)
 
         self.frames = {}
 
@@ -31,7 +53,7 @@ class SeatrecControlHub(tk.Tk):
 
             frame.grid(row=0, column=0, sticky = "nsew")
 
-        self.show_frame(F)
+        self.show_frame(StartPage)
 
     def show_frame(self, cont):
 
@@ -46,17 +68,20 @@ class StartPage(tk.Frame):
 
     def __init__(self,parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self,text = "Start Page", font = LARGE_FONT)
+        label = tk.Label(self,text = "Seatrec Status Checker : Connection to serial port recquired.", font = LARGE_FONT)
         label.pack(pady=10,padx=10)
 
-        
-        radio_1 = ttk.Radiobutton(text = "Windows", variable = button_var, value = 1).place(x = 10, y = 315)
-        radio_2 = ttk.Radiobutton(text = "Linux", variable = button_var, value = 2).place(x = 110, y = 315)
-        radio_3 = ttk.Radiobutton(text = "Mac", variable = button_var, value = 3).place(x = 210, y = 315)
+    
 
 
         connectbutton = ttk.Button(self, text="Connect", command=connect)
         connectbutton.pack()
+
+        contbutton = ttk.Button(self, text="Continue",
+                            command=lambda: controller.show_frame(Seatrec_Control_Hub))
+        contbutton.pack()
+
+        
 
 class Seatrec_Control_Hub(tk.Frame):
 
@@ -69,6 +94,8 @@ class Seatrec_Control_Hub(tk.Frame):
 
         reconnectbutton = ttk.Button(self, text="Reconnect", command=lambda: controller.show_frame(StartPage))
         reconnectbutton.pack()
+
+ 
 
 app = SeatrecControlHub()
 app.geometry("1280x720")
