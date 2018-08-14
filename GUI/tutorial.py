@@ -1,5 +1,5 @@
 import serial
-import SCRIPT
+from SCRIPT import *
 import Tkinter as tk
 import ttk
 
@@ -60,26 +60,34 @@ class SeatrecControlHub(tk.Tk):
         frame = self.frames[cont]
         frame.tkraise()
 
-def connect():
-    print "hey"
+
     
 
-class StartPage(tk.Frame):
+class StartPage(tk.Frame, Connection):
 
     def __init__(self,parent, controller):
         tk.Frame.__init__(self, parent)
         label = tk.Label(self,text = "Seatrec Status Checker : Connection to serial port recquired.", font = LARGE_FONT)
         label.pack(pady=10,padx=10)
 
+        baud_entry = tk.Entry(width = 7)
+        baud_entry.place(x = 100, y = 365)
     
+        port_entry = tk.Entry(width = 7)
+        port_entry.place(x = 200, y = 365)
+        
+        port = port_entry.get()
+        baud = baud_entry.get()
 
-
-        connectbutton = ttk.Button(self, text="Connect", command=connect)
+    
+        connectbutton = ttk.Button(self, text="Connect", command=Connection(port,baud))
         connectbutton.pack()
 
-        contbutton = ttk.Button(self, text="Continue",
-                            command=lambda: controller.show_frame(Seatrec_Control_Hub))
-        contbutton.pack()
+        Connect_status = self.connect()
+        
+        if Connect_status == 0:
+            lambda: controller.show_frame(Seatrec_Control_Hub)
+
 
         
 
