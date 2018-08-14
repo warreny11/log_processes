@@ -8,8 +8,15 @@ class Application(Frame,Connection):
     
     def connection(self):
         
-        available_ports = serial_ports
+        serial_ports()
+        
 
+        for i in range(len(serial_ports)):
+            available_ports[i] = serial_ports
+        
+        port_option = OptionMenu(master, variable = available_ports)
+        port_option.pack()
+        
 
         
         # Windows = Radiobutton(text = "Windows", variable = button_var, value = 1).place(x = 10, y = 315)

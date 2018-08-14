@@ -1,6 +1,7 @@
 import serial
 import SCRIPT
 import tkinter as tk
+import ttk
 
 LARGE_FONT = ("Verdana", 12)
 
@@ -9,32 +10,53 @@ class SeatrecControlHub(tk.Tk):
     def __init__(self,*args,**kwargs):
         
         tk.Tk.__init__(self, *args, **kwargs)
+
+        tk.Tk.iconbitmap(self, default="seatrec_LQ1_icon.ico")
+        tk.Tk.wm_title(self, "Seatrec Control Hub")
+
         container = tk.Frame(self)
-
         container.pack(side="top", fill="both", expand=True)
-
         container.grid_rowconfigure(0,weight=1)
         container.grid_columnconfigure(0,weight=1)
 
         self.frames = {}
 
-        frame = StartPage(container,self)
-        self.frames[StartPage] = frame
+        for F in (StartPage, Seatrec_Control_Hub):
 
-        frame.grid(row=0, column=0, sticky = "nsew")
+            frame = F(container,self)
+            self.frames[F] = frame
 
-        self.show_frame(StartPage)
+            frame.grid(row=0, column=0, sticky = "nsew")
+
+        self.show_frame(F)
 
     def show_frame(self, cont):
 
         frame = self.frames[cont]
         frame.tkraise()
 
+def connect():
+    print "hey"
+
 class StartPage(tk.Frame):
+
     def __init__(self,parent, controller):
         tk.Frame.__init__(self, parent)
         label = tk.Label(self,text = "Start Page", font = LARGE_FONT)
         label.pack(pady=10,padx=10)
+
+        connectbutton = ttk.Button(self, text="Connect", command=connect)
+        connectbutton.pack()
+
+class Seatrec_Control_Hub(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self,parent)
+        label = tk.Label(self,text = "Seatrec Control Hub", font = LARGE_FONT)
+        label.pack(pady=10,padx=10)
+
+        connectbutton = ttk.Button(self, text="Reconnect", command=lambda: controller.show_frame(StartPage))
+        connectbutton.pack()
 
 app = SeatrecControlHub()
 app.mainloop()
