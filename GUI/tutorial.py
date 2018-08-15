@@ -1,3 +1,6 @@
+# The code for the tkinter GUI was derived in parts from: https://pythonprogramming.net/converting-tkinter-to-exe-with-cx-freeze/
+# License: http://creativecommons.org/licenses/by-sa/3.0/
+
 import serial
 from SCRIPT import *
 import Tkinter as tk
@@ -22,12 +25,6 @@ class SeatrecControlHub(tk.Tk):
         
         tk.Tk.__init__(self, *args, **kwargs)
 
-        try:
-            tk.Tk.iconbitmap(self, default="seatrec_LQ1_icon.ico")
-        except:
-            # tk.Tk.iconbitmap(self, default="seatrec (1).png")
-            pass
-
         tk.Tk.wm_title(self, "Seatrec Control Hub")
 
         container = tk.Frame(self)
@@ -50,42 +47,41 @@ class SeatrecControlHub(tk.Tk):
 
             frame = F(container,self)
             self.frames[F] = frame
-
             frame.grid(row=0, column=0, sticky = "nsew")
 
         self.show_frame(StartPage)
+
+        try:
+            tk.Tk.iconbitmap(self, default="seatrec_LQ1_icon.ico")
+        except:
+            # tk.Tk.iconbitmap(self, default="seatrec (1).png")
+            pass
 
     def show_frame(self, cont):
 
         frame = self.frames[cont]
         frame.tkraise()
-
-
-    
-
+        
 class StartPage(tk.Frame, Connection):
 
     def __init__(self,parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self,text = "Seatrec Status Checker : Connection to serial port recquired.", font = LARGE_FONT)
-        label.pack(pady=10,padx=10)
+        label = tk.Label(self,text = "Seatrec Status Checker : Connection to serial port required.", font = LARGE_FONT)
+        label.pack(side = "top", fill = "x", pady=10)
 
         baud_entry = tk.Entry(width = 7)
-        baud_entry.place(x = 100, y = 365)
+        baud_entry.pack()
     
         port_entry = tk.Entry(width = 7)
-        port_entry.place(x = 200, y = 365)
+        port_entry.pack()
         
         port = port_entry.get()
         baud = baud_entry.get()
 
-    
-        connectbutton = ttk.Button(self, text="Connect", command=Connection(port,baud))
+        connectbutton = ttk.Button(self, text="Connect", command=self.connect(port,baud))
         connectbutton.pack()
 
-        Connect_status = self.connect()
-        
-        if Connect_status == 0:
+        if self.connect == 0:
             lambda: controller.show_frame(Seatrec_Control_Hub)
 
 
@@ -97,6 +93,7 @@ class Seatrec_Control_Hub(tk.Frame):
         tk.Frame.__init__(self,parent)
         label = tk.Label(self,text = "Seatrec Control Hub", font = LARGE_FONT)
         label.pack(pady=10,padx=10)
+
 
 
 

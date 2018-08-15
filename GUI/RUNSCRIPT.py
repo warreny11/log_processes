@@ -2,11 +2,11 @@ import serial
 import time
 from SCRIPT import Connection
 
-port = "COM8"
-baud = 9600
+port = raw_input("port: ")
+baud = raw_input("baud: ")
 
-my_SL1_connection = Connection(port,baud)
-Connect_status = my_SL1_connection.connect()
+my_SL1_connection = Connection()
+Connect_status = my_SL1_connection.connect(port,baud)
 
 if Connect_status==0:
     print "Connected..."

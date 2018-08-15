@@ -8,18 +8,21 @@ import serial
 
 class Connection():
     
-    def __init__(self,port,baud):
-        self.port = port
-        self.baud = baud
+    def __init__(self):
+        
         self.rxstr = ""
         print "Initializing Connection..."
 
-    def connect(self):
-        self.ser = serial.Serial(str(self.port), self.baud)
-        while self.ser.is_open:
-            return 0
-        else:
-            return -1
+    def connect(self,port,baud):
+        try:
+            self.ser = serial.Serial(str(port),baud)
+            while self.ser.is_open:
+                return 0
+            else:
+                return -1
+        except:
+            "Failed to open port..."
+        
 
     def commands(self,my_input): 
         
