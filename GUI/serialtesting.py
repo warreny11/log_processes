@@ -93,7 +93,7 @@ class StartPage(Frame):
         self.version_ = self.button_var.get()
 
         connectbutton = Button(self,text = "Connect", command = self.connect)
-        connectbutton.place(x = 600, y = 375)
+        connectbutton.place(x = 600, y = 390)
        
     def connect(self): 
     
@@ -106,6 +106,7 @@ class StartPage(Frame):
                     ser = serial.Serial('/dev/tty' + str(self.port), self.baud)
                     if ser.is_open:
                         SeaTrecPrograms.show_frame(self,Seatrec_Control_Hub)
+                        print "Connected..."
                 
                 except:
                     lambda: popupmsg("Unable to Connect")
@@ -115,7 +116,7 @@ class StartPage(Frame):
                     ser = serial.Serial('COM' + str(self.port), self.baud)
                     if ser.is_open:
                         SeaTrecPrograms.show_frame(self,Seatrec_Control_Hub)
-
+                        print "Connected..."
                 except:
                     lambda: popupmsg("Unable to Connect")
 
@@ -124,7 +125,7 @@ class StartPage(Frame):
                     ser = serial.Serial('/dev/tty.' + str(self.port), self.baud)
                     if ser.is_open:
                         SeaTrecPrograms.show_frame(self,Seatrec_Control_Hub)
-
+                        print "Connected..."
                 except:
                     lambda: popupmsg("Unable to Connect")
 
