@@ -20,7 +20,7 @@ def popupmsg(msg):
     popup.mainloop()
 
 
-class SeatrecControlHub(Tk):
+class SeaTrecPrograms(Tk):
 
     def __init__(self,*args,**kwargs):
         
@@ -95,12 +95,8 @@ class StartPage(Frame):
         connectbutton = Button(self,text = "Connect", command = self.connect)
         connectbutton.place(x = 600, y = 375)
        
-    def connect(self, parent,controller): 
-        Frame.__init__(self, parent)
-
-
-        
-        print self.version_
+    def connect(self): 
+    
         self.port = self.port_entry.get()
         self.baud = self.baud_entry.get() 
 
@@ -109,7 +105,7 @@ class StartPage(Frame):
                 try:
                     ser = serial.Serial('/dev/tty' + str(self.port), self.baud)
                     if ser.is_open:
-                        lambda: controller.show_frame(Seatrec_Control_Hub)
+                        SeaTrecPrograms.show_frame(self,Seatrec_Control_Hub)
                 
                 except:
                     lambda: popupmsg("Unable to Connect")
@@ -118,7 +114,7 @@ class StartPage(Frame):
                 try:
                     ser = serial.Serial('COM' + str(self.port), self.baud)
                     if ser.is_open:
-                        lambda: controller.show_frame(Seatrec_Control_Hub)
+                        SeaTrecPrograms.show_frame(self,Seatrec_Control_Hub)
 
                 except:
                     lambda: popupmsg("Unable to Connect")
@@ -127,7 +123,7 @@ class StartPage(Frame):
                 try:
                     ser = serial.Serial('/dev/tty.' + str(self.port), self.baud)
                     if ser.is_open:
-                        lambda: controller.show_frame(Seatrec_Control_Hub)
+                        SeaTrecPrograms.show_frame(self,Seatrec_Control_Hub)
 
                 except:
                     lambda: popupmsg("Unable to Connect")
@@ -149,6 +145,6 @@ class Seatrec_Control_Hub(Frame):
 
  
 
-app = SeatrecControlHub()
+app = SeaTrecPrograms()
 app.geometry("1280x720")
 app.mainloop()
