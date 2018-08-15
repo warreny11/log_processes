@@ -24,6 +24,8 @@ class Connection():
             if version_ == 2:
                 try:
                     ser = serial.Serial('/dev/tty' + str(self.port), self.baud)
+                    if ser.is_open:
+                        print "Connected..."
                 
                 except:
                     print "Cant Open Specified Port"
@@ -31,6 +33,8 @@ class Connection():
             elif version_ == 1:
                 try:
                     ser = serial.Serial('COM' + str(self.port), self.baud)
+                    if ser.is_open:
+                        print "Connected..."
 
                 except:
                     print "Cant Open Specified Port"
@@ -38,6 +42,9 @@ class Connection():
             elif version_ == 3:
                 try:
                     ser = serial.Serial('/dev/tty.' + str(self.port), self.baud)
+                    if ser.is_open:
+                        print "Connected..."
+                        
                 except:
                     print "Cant Open Specified Port"
 
