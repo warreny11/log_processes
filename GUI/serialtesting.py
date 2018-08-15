@@ -73,32 +73,31 @@ class StartPage(Frame):
         label.pack(side = "top", fill = "x", pady=10)
 
         baud_label = Label(self,text = "Baud")
-        baud_label.pack(side = "top", fill = "x", pady=10)
+        baud_label.place(x = 500, y = 340)
         port_label = Label(self,text = "Port (without tty)")
-        port_label.pack(side = "top", fill = "x", pady=10)
+        port_label.place(x = 600, y = 340)
 
         self.baud_entry = Entry(self,width = 7)
-        self.baud_entry.place(x = 100, y = 365)
+        self.baud_entry.place(x = 500, y = 365)
 
         self.port_entry = Entry(self,width = 7)
-        self.port_entry.place(x = 200, y = 365)
+        self.port_entry.place(x = 600, y = 365)
 
         self.button_var = IntVar()
 
-        radio_1 = Radiobutton(text = "Windows", variable = self.button_var, value = 1)
-        radio_1.place(x = 10, y = 315)
-        radio_2 = Radiobutton(text = "Linux", variable = self.button_var, value = 2).place(x = 110, y = 315)
-        radio_2.place(x = 10, y = 315)
-        radio_3 = Radiobutton(text = "Mac", variable = self.button_var, value = 3).place(x = 210, y = 315)
-        radio_3.place(x = 10, y = 315)
+        self.radio_1 = Radiobutton(text = "Windows", variable = self.button_var, value = 1).place(x = 500, y = 315)
+        self.radio_2 = Radiobutton(text = "Linux", variable = self.button_var, value = 2).place(x = 600, y = 315)
+        self.radio_3 = Radiobutton(text = "Mac", variable = self.button_var, value = 3).place(x = 700, y = 315)
+        
 
         self.version_ = self.button_var.get()
+
+        connectbutton = Button(self,text = "Connect", command = self.connect)
+        connectbutton.place(x = 600, y = 375)
        
     def connect(self, parent,controller): 
         Frame.__init__(self, parent)
 
-        connectbutton = Button(self,text = "Connect", command = self.connect)
-        connectbutton.place(x = 15, y = 360)
 
         
         print self.version_
