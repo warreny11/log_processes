@@ -50,9 +50,9 @@ class StartPage(tk.Frame):
         label.pack(pady=10,padx=10)
 
         
-        radio_1 = ttk.Radiobutton(text = "Windows", variable = button_var, value = 1).place(x = 10, y = 315)
-        radio_2 = ttk.Radiobutton(text = "Linux", variable = button_var, value = 2).place(x = 110, y = 315)
-        radio_3 = ttk.Radiobutton(text = "Mac", variable = button_var, value = 3).place(x = 210, y = 315)
+        # radio_1 = ttk.Radiobutton(text = "Windows", variable = button_var, value = 1).place(x = 10, y = 315)
+        # radio_2 = ttk.Radiobutton(text = "Linux", variable = button_var, value = 2).place(x = 110, y = 315)
+        # radio_3 = ttk.Radiobutton(text = "Mac", variable = button_var, value = 3).place(x = 210, y = 315)
 
 
         connectbutton = ttk.Button(self, text="Connect", command=connect)
