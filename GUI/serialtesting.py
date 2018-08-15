@@ -57,9 +57,9 @@ radio_1 = Radiobutton(text = "Windows", variable = button_var, value = 1).place(
 radio_2 = Radiobutton(text = "Linux", variable = button_var, value = 2).place(x = 110, y = 315)
 radio_3 = Radiobutton(text = "Mac", variable = button_var, value = 3).place(x = 210, y = 315)
 
-bob = Connection()
+connection_ = Connection()
 
-connectbutton = Button(text = "Connect", command = bob.connect).place(x = 15, y = 360)
+connectbutton = Button(text = "Connect", command = connection_.connect).place(x = 15, y = 360)
 
 gui.geometry('500x500')
 gui.mainloop()
