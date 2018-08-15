@@ -1,21 +1,20 @@
 import serial
 import sys
 from data_sort import convert
-import serial
+
 
 #port = "/dev/tty.usbserial"
 #baud = 9600
 
 class Connection():
     
-    def __init__(self,port,baud):
-        self.port = port
-        self.baud = baud
+    def __init__(self):
+        
         self.rxstr = ""
         print "Initializing Connection..."
 
-    def connect(self):
-        self.ser = serial.Serial(str(self.port), self.baud)
+    def connect(self,port,baud):
+        self.ser = serial.Serial(str(port), baud)
         while self.ser.is_open:
             return 0
         else:
