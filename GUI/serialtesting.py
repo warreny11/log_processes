@@ -1,6 +1,5 @@
 import serial
 import io
-import Tkinter
 from Tkinter import*
 import ttk
 import threading
@@ -18,6 +17,44 @@ def popupmsg(msg):
     B1 = ttk.Button(popup, text="Okay", command = popup.destroy)
     B1.pack()
     popup.mainloop()
+
+def connect(port,baud,version_): 
+
+        print version_
+
+        try:
+            if version_ == 2:
+                try:
+                    ser = serial.Serial('/dev/tty' + str(port), baud)
+                    if ser.is_open:
+                        SeaTrecPrograms.show_frame
+                        print "Connected..."
+                
+                except:
+                    lambda: popupmsg("Unable to Connect")
+
+            elif version_ == 1:
+                try:
+                    ser = serial.Serial('COM' + str(port), baud)
+                    if ser.is_open:
+                        
+                        print "Connected..."
+                except:
+                    lambda: popupmsg("Unable to Connect")
+
+            elif version_ == 3:
+                try:
+                    ser = serial.Serial('/dev/tty.' + str(port), baud)
+                    if ser.is_open:
+                        
+                        print "Connected..."
+                except:
+                    lambda: popupmsg("Unable to Connect")
+
+        except ValueError:
+            lambda: popupmsg("Please Re-enter Port and Baud")
+            
+
 
 
 class SeaTrecPrograms(Tk):
@@ -67,7 +104,7 @@ class SeaTrecPrograms(Tk):
     
 class StartPage(Frame):
 
-    def __init__(self,parent, controller):
+    def __init__(self,parent,controller):
         Frame.__init__(self, parent)
         label = Label(self,text = "Seatrec Status Checker : Connection to serial port required.", font = LARGE_FONT)
         label.pack(side = "top", fill = "x", pady=10)
@@ -77,11 +114,11 @@ class StartPage(Frame):
         port_label = Label(self,text = "Port (without tty)")
         port_label.place(x = 600, y = 340)
 
-        self.baud_entry = Entry(self,width = 7)
-        self.baud_entry.place(x = 500, y = 365)
+        baud_entry = Entry(self,width = 7)
+        baud_entry.place(x = 500, y = 365)
 
-        self.port_entry = Entry(self,width = 7)
-        self.port_entry.place(x = 600, y = 365)
+        port_entry = Entry(self,width = 7)
+        port_entry.place(x = 600, y = 365)
 
         self.button_var = IntVar()
 
@@ -92,46 +129,13 @@ class StartPage(Frame):
 
         self.version_ = self.button_var.get()
 
-        connectbutton = Button(self,text = "Connect", command = self.connect)
-        connectbutton.place(x = 600, y = 390)
+        port = port_entry.get()
+        baud = baud_entry.get() 
+
+        connectbutton = Button(self,text = "Connect", command = connect(port,baud,self.version_))
+        connectbutton.place(x = 600, y = 400)
        
-    def connect(self): 
     
-        self.port = self.port_entry.get()
-        self.baud = self.baud_entry.get() 
-
-        try:
-            if self.version_ == 2:
-                try:
-                    ser = serial.Serial('/dev/tty' + str(self.port), self.baud)
-                    if ser.is_open:
-                        SeaTrecPrograms.show_frame(self,Seatrec_Control_Hub)
-                        print "Connected..."
-                
-                except:
-                    lambda: popupmsg("Unable to Connect")
-
-            elif self.version_ == 1:
-                try:
-                    ser = serial.Serial('COM' + str(self.port), self.baud)
-                    if ser.is_open:
-                        SeaTrecPrograms.show_frame(self,Seatrec_Control_Hub)
-                        print "Connected..."
-                except:
-                    lambda: popupmsg("Unable to Connect")
-
-            elif self.version_ == 3:
-                try:
-                    ser = serial.Serial('/dev/tty.' + str(self.port), self.baud)
-                    if ser.is_open:
-                        SeaTrecPrograms.show_frame(self,Seatrec_Control_Hub)
-                        print "Connected..."
-                except:
-                    lambda: popupmsg("Unable to Connect")
-
-        except ValueError:
-            lambda: popupmsg("Please Re-enter Port and Baud")
-            return
         
 class Seatrec_Control_Hub(Frame):
 
