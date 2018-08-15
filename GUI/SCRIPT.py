@@ -13,9 +13,11 @@ class Connection():
         self.rxstr = ""
         print "Initializing Connection..."
 
-    def connect(self,port,baud):
+    def connect(self):
+        self.port = raw_input("port: ")
+        self.baud = raw_input("baud: ")
         try:
-            self.ser = serial.Serial(str(port),baud)
+            self.ser = serial.Serial(str(self.port),self.baud)
             while self.ser.is_open:
                 return 0
             else:
