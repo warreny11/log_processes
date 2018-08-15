@@ -11,9 +11,6 @@ gui.title("Seatrec Serial Interface")
 
 class Connection():
 
-    def __init__(self):
-        pass
-    
     def connect(self): 
         version_ = button_var.get()
         print version_
@@ -44,7 +41,7 @@ class Connection():
                     ser = serial.Serial('/dev/tty.' + str(self.port), self.baud)
                     if ser.is_open:
                         print "Connected..."
-                        
+
                 except:
                     print "Cant Open Specified Port"
 
@@ -67,6 +64,9 @@ radio_3 = Radiobutton(text = "Mac", variable = button_var, value = 3).place(x = 
 connection_ = Connection()
 
 connectbutton = Button(text = "Connect", command = connection_.connect).place(x = 15, y = 360)
+
+baud   = Label(text = "Baud").place(x = 100, y = 348)
+port   = Label(text = "Port (without tty)").place(x = 200, y = 348)
 
 gui.geometry('500x500')
 gui.mainloop()
