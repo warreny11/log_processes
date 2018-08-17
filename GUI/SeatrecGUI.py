@@ -73,11 +73,10 @@ class StartPage(tk.Frame):
         self.port_entry.place(x = 600, y = 365)
 
         
-        connectbutton = tk.Button(self,text = "Connect", command = self.connect)
-        connectbutton.place(x = 600, y = 400)
-
-        if self.connect == 0:
-            controller.show_frame(Seatrec_Control_Hub) 
+        self.connectbutton = tk.Button(text = "Connect", command = self.connect lambda: controller.show_frame(Seatrec_Control_Hub) )
+        self.connectbutton.place(x = 600, y = 400)
+        
+            
 
     def connect(self): 
 
@@ -91,40 +90,29 @@ class StartPage(tk.Frame):
 
         for text,modes in poss_systems:
             if system == text:
-                print system
+                # print system
                 self.version_ = int(modes)
-                print self.version_
+                # print self.version_
 
         port = self.port_entry.get()
         baud = self.baud_entry.get() 
-        
-    
-        if self.version_ == 2:
-            try:
-                ser = serial.Serial('/dev/tty' + str(port), baud)        
-            except:
-                print "Running Linux: Cant Open Specified Port"
 
-        elif self.version_ == 1:
-            try:
-                ser = serial.Serial('COM' + str(port), baud)
-            except:
-                print "Running Windows: Cant Open Specified Port"
+        sys_list = [("Windows","1","COM"),
+                    ("Linux", "2","/dev/tty"),
+                    ("Mac", "3","/dev/tty.")]
 
-        elif self.version_ == 3:
-            try:
-                ser = serial.Serial('/dev/tty.' + str(port), baud)
-                
-            except:
-                print "Running Darwin: Cant Open Specified Port"  
-        
-        if ser.is_open :
-            return 0 
-        else :
-            return 1 
-
-  
-        
+        for types, nums, ports in sys_list:
+            if self.version_ == int(nums):
+                try:
+                    ser = serial.Serial(ports + str(port), baud)
+                    if ser.is_open :
+                        print "Connected..."
+                        return 0 
+                    else :
+                        return -1 
+                except:
+                    print "Running " + types + ": Cant Open Specified Port"
+      
 
 class Seatrec_Control_Hub(tk.Frame):
     def __init__(self, parent, controller):
