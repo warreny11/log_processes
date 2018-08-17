@@ -72,10 +72,13 @@ class StartPage(tk.Frame):
         self.port_entry = tk.Entry(width = 7)
         self.port_entry.place(x = 600, y = 365)
 
-        
-        self.connectbutton = tk.Button(text = "Connect", command = self.connect lambda: controller.show_frame(Seatrec_Control_Hub) )
+        connected = -1
+
+        self.connectbutton = tk.Button(text = "Connect", command = lambda: connected=self.connect
         self.connectbutton.place(x = 600, y = 400)
-        
+    
+        if connected == 0:
+            controller.show_frame(Seatrec_Control_Hub) 
             
 
     def connect(self): 
