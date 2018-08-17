@@ -61,19 +61,24 @@ class StartPage(tk.Frame):
         label = tk.Label(self,text = "Start Page", font = LARGE_FONT)
         label.pack(pady=10,padx=10)
 
-        self.baud_entry = ttk.Entry(width = 7)
-        self.baud_entry.place(x = 100, y = 365)
-    
-        self.port_entry = ttk.Entry(width = 7)
-        self.port_entry.place(x = 200, y = 365)
+        baud_label = tk.Label(self,text = "Baud")
+        baud_label.place(x = 500, y = 340)
+        port_label = tk.Label(self,text = "Port")
+        port_label.place(x = 600, y = 340)
 
-        connectbutton = ttk.Button(self, text="Connect", command=self.connect())
-        connectbutton.pack()
+        self.baud_entry = tk.Entry(width = 7)
+        self.baud_entry.place(x = 500, y = 365)
+
+        self.port_entry = tk.Entry(width = 7)
+        self.port_entry.place(x = 600, y = 365)
 
         self.button_var = tk.IntVar()
-        radio_1 = tk.Radiobutton(text = "Windows", variable = self.button_var, value = 1).place(x = 10, y = 315)
-        radio_2 = tk.Radiobutton(text = "Linux", variable = self.button_var, value = 2).place(x = 110, y = 315)
-        radio_3 = tk.Radiobutton(text = "Mac", variable = self.button_var, value = 3).place(x = 210, y = 315)
+        radio_1 = tk.Radiobutton(text = "Windows", variable = self.button_var, value = 1).place(x = 500, y = 315)
+        radio_2 = tk.Radiobutton(text = "Linux", variable = self.button_var, value = 2).place(x = 600, y = 315)
+        radio_3 = tk.Radiobutton(text = "Mac", variable = self.button_var, value = 3).place(x = 700, y = 315)
+
+        connectbutton = tk.Button(self,text = "Connect", command = self.connect())
+        connectbutton.place(x = 600, y = 400)
 
     def connect(self): 
         

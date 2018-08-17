@@ -53,9 +53,9 @@ port_entry = Entry(width = 7)
 port_entry.place(x = 200, y = 365)
 
 button_var = IntVar()
-radio_1 = Radiobutton(text = "Windows", variable = button_var, value = 1).place(x = 10, y = 315)
-radio_2 = Radiobutton(text = "Linux", variable = button_var, value = 2).place(x = 110, y = 315)
-radio_3 = Radiobutton(text = "Mac", variable = button_var, value = 3).place(x = 210, y = 315)
+radio_1 = Radiobutton(text = "Windows", variable = button_var, value = 1).place(x = 500, y = 315)
+radio_2 = Radiobutton(text = "Linux", variable = button_var, value = 2).place(x = 600, y = 315)
+radio_3 = Radiobutton(text = "Mac", variable = button_var, value = 3).place(x = 700, y = 315)
 
 connection_ = Connection()
 

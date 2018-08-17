@@ -53,7 +53,7 @@ def connect(port,baud,version_):
 
         except ValueError:
             lambda: popupmsg("Please Re-enter Port and Baud")
-            
+            return
 
 
 
