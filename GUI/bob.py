@@ -1,6 +1,5 @@
 import serial
 import io
-import Tkinter
 from Tkinter import*
 import ttk
 import threading
@@ -24,13 +23,16 @@ class Connection():
             if version_ == 2:
                 try:
                     ser = serial.Serial('/dev/tty' + str(self.port), self.baud)
+                    print "connected"
                 
                 except:
                     print "Cant Open Specified Port"
-
+                    
             elif version_ == 1:
                 try:
                     ser = serial.Serial('COM' + str(self.port), self.baud)
+                    if ser.is_open:
+                        print "connected"
 
                 except:
                     print "Cant Open Specified Port"
@@ -38,6 +40,7 @@ class Connection():
             elif version_ == 3:
                 try:
                     ser = serial.Serial('/dev/tty.' + str(self.port), self.baud)
+                    print "connected"
                 except:
                     print "Cant Open Specified Port"
 
