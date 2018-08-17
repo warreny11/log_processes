@@ -1,5 +1,4 @@
 import serial
-import SCRIPT
 import Tkinter as tk
 import ttk
 import threading
@@ -72,42 +71,58 @@ class StartPage(tk.Frame):
         self.port_entry = tk.Entry(width = 7)
         self.port_entry.place(x = 600, y = 365)
 
-        self.button_var = tk.IntVar()
-        radio_1 = tk.Radiobutton(text = "Windows", variable = self.button_var, value = 1).place(x = 500, y = 315)
-        radio_2 = tk.Radiobutton(text = "Linux", variable = self.button_var, value = 2).place(x = 600, y = 315)
-        radio_3 = tk.Radiobutton(text = "Mac", variable = self.button_var, value = 3).place(x = 700, y = 315)
+        MODES = [
+                ("Windows", "1"),
+                ("Linux", "2"),
+                ("Mac", "3"),
+            ]
 
-        connectbutton = tk.Button(self,text = "Connect", command = self.connect())
+        self.button_var = tk.IntVar()
+        self.button_var.set(1) # initialize
+        hor = 500
+
+        
+
+        for text, mode in MODES:
+            
+            Computer_type = tk.Radiobutton(text=text, variable=self.button_var, value=mode)
+            Computer_type.place(x = hor, y = 315)
+            hor+=100
+
+        
+        connectbutton = tk.Button(self,text = "Connect", command = self.connect)
         connectbutton.place(x = 600, y = 400)
 
     def connect(self): 
-        
-        version_ = self.button_var.get()
-        print version_
-        global serial_object
+        self.version_ = self.button_var.get()
+        print self.version_
+
         port = self.port_entry.get()
         baud = self.baud_entry.get() 
+        print ("hello I'm called")
         
-        try:
-            if version_ == 2:
-                try:
-                    serial_object = serial.Serial('/dev/tty' + str(port), baud)
-                
-                except:
-                    print "Cant Open Specified Port"
+    
+        if self.version_ == 2:
+            try:
+                ser = serial.Serial('/dev/tty' + str(port), baud)
+            
+            except:
+                print "Cant Open Specified Port Linux"
 
-            elif version_ == 1:
-                serial_object = serial.Serial('COM' + str(port), baud)
+        elif self.version_ == 1:
+            try:
+                ser = serial.Serial('COM' + str(port), baud)
+            except:
+                print "Cant Open Specified Port Windows"
 
-            elif version_ == 3:
-                serial_object = serial.Serial('/dev/tty.' + str(port), baud)
-
-        except ValueError:
-            print "Enter Baud and Port"
-            return
+        elif self.version_ == 3:
+            try:
+                ser = serial.Serial('/dev/tty.' + str(port), baud)
+            except:
+                print "Cant Open Specified Port Mac"     
+        print("exiting connect")
 
 class Seatrec_Control_Hub(tk.Frame):
-
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
         label = tk.Label(self,text = "Seatrec Control Hub", font = LARGE_FONT)
