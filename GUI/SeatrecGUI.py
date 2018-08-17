@@ -79,10 +79,18 @@ class StartPage(tk.Frame):
     def connect(self): 
 
         system = platform.system()
-        poss_systems = 
 
-        print system
-        self.version_ = 1
+        poss_systems =[
+                ("Windows", "1"),
+                ("Linux", "2"),
+                ("Darwin", "3"),
+            ]
+
+        for text,modes in poss_systems:
+            if system == text:
+                print system
+                self.version_ = int(modes)
+                print self.version_
 
         port = self.port_entry.get()
         baud = self.baud_entry.get() 
@@ -91,7 +99,6 @@ class StartPage(tk.Frame):
         if self.version_ == 2:
             try:
                 ser = serial.Serial('/dev/tty' + str(port), baud)
-            
             except:
                 print "Running Linux: Cant Open Specified Port"
 
@@ -104,9 +111,10 @@ class StartPage(tk.Frame):
         elif self.version_ == 3:
             try:
                 ser = serial.Serial('/dev/tty.' + str(port), baud)
+                
             except:
-                print "Running Mac: Cant Open Specified Port"     
-        print("exiting connect")
+                print "Running Darwin: Cant Open Specified Port"     
+        
 
 class Seatrec_Control_Hub(tk.Frame):
     def __init__(self, parent, controller):
