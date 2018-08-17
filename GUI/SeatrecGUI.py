@@ -76,6 +76,9 @@ class StartPage(tk.Frame):
         connectbutton = tk.Button(self,text = "Connect", command = self.connect)
         connectbutton.place(x = 600, y = 400)
 
+        if self.connect == 0:
+            controller.show_frame(Seatrec_Control_Hub) 
+
     def connect(self): 
 
         system = platform.system()
@@ -98,7 +101,7 @@ class StartPage(tk.Frame):
     
         if self.version_ == 2:
             try:
-                ser = serial.Serial('/dev/tty' + str(port), baud)
+                ser = serial.Serial('/dev/tty' + str(port), baud)        
             except:
                 print "Running Linux: Cant Open Specified Port"
 
@@ -113,7 +116,14 @@ class StartPage(tk.Frame):
                 ser = serial.Serial('/dev/tty.' + str(port), baud)
                 
             except:
-                print "Running Darwin: Cant Open Specified Port"     
+                print "Running Darwin: Cant Open Specified Port"  
+        
+        if ser.is_open :
+            return 0 
+        else :
+            return 1 
+
+  
         
 
 class Seatrec_Control_Hub(tk.Frame):
