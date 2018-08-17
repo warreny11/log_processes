@@ -13,14 +13,6 @@ class Connection():
         self.rxstr = ""
         print "Initializing Connection..."
 
-<<<<<<< HEAD
-    def connect(self,port,baud):
-        self.ser = serial.Serial(str(port), baud)
-        while self.ser.is_open:
-            return 0
-        else:
-            return -1
-=======
     def connect(self):
         self.port = raw_input("port: ")
         self.baud = raw_input("baud: ")
@@ -33,7 +25,6 @@ class Connection():
         except:
             "Failed to open port..."
         
->>>>>>> d149bafe5d550d49aaa801b4ffd57fae6e516b39
 
     def commands(self,my_input): 
         

@@ -1,5 +1,5 @@
 import serial
-import SCRIPT
+
 import Tkinter as tk
 import ttk
 import threading
