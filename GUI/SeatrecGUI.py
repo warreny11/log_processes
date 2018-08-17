@@ -4,6 +4,7 @@ import ttk
 import threading
 import time
 import io
+import platform
 
 LARGE_FONT = ("Verdana", 12)
 NORM_FONT = ("Helvetica", 10)
@@ -71,35 +72,20 @@ class StartPage(tk.Frame):
         self.port_entry = tk.Entry(width = 7)
         self.port_entry.place(x = 600, y = 365)
 
-        MODES = [
-                ("Windows", "1"),
-                ("Linux", "2"),
-                ("Mac", "3"),
-            ]
-
-        self.button_var = tk.IntVar()
-        self.button_var.set(1) # initialize
-        hor = 500
-
-        
-
-        for text, mode in MODES:
-            
-            Computer_type = tk.Radiobutton(text=text, variable=self.button_var, value=mode)
-            Computer_type.place(x = hor, y = 315)
-            hor+=100
-
         
         connectbutton = tk.Button(self,text = "Connect", command = self.connect)
         connectbutton.place(x = 600, y = 400)
 
     def connect(self): 
-        self.version_ = self.button_var.get()
-        print self.version_
+
+        system = platform.system()
+        poss_systems = 
+
+        print system
+        self.version_ = 1
 
         port = self.port_entry.get()
         baud = self.baud_entry.get() 
-        print ("hello I'm called")
         
     
         if self.version_ == 2:
@@ -107,19 +93,19 @@ class StartPage(tk.Frame):
                 ser = serial.Serial('/dev/tty' + str(port), baud)
             
             except:
-                print "Cant Open Specified Port Linux"
+                print "Running Linux: Cant Open Specified Port"
 
         elif self.version_ == 1:
             try:
                 ser = serial.Serial('COM' + str(port), baud)
             except:
-                print "Cant Open Specified Port Windows"
+                print "Running Windows: Cant Open Specified Port"
 
         elif self.version_ == 3:
             try:
                 ser = serial.Serial('/dev/tty.' + str(port), baud)
             except:
-                print "Cant Open Specified Port Mac"     
+                print "Running Mac: Cant Open Specified Port"     
         print("exiting connect")
 
 class Seatrec_Control_Hub(tk.Frame):

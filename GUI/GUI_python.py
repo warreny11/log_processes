@@ -15,7 +15,7 @@ gui = Tk()
 gui.title("Seatrec Serial Interface")
 
 
-def connect(): 
+def connect_evh(): 
     version_ = button_var.get()
     print version_
     global serial_object
@@ -169,7 +169,7 @@ if __name__ == "__main__":
 
     #button
     button1 = Button(text = "Send", command = send, width = 6).place(x = 15, y = 250)
-    connect = Button(text = "Connect", command = connect).place(x = 15, y = 360)
+    connect = Button(text = "Connect", command = connect_evh).place(x = 15, y = 360)
     disconnect = Button(text = "Disconnect", command = disconnect).place(x =370, y = 360)
    
     #mainloop
