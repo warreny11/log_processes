@@ -1,8 +1,4 @@
 import serial
-<<<<<<< HEAD
-
-=======
->>>>>>> c500c19d796bfbdda81e67231215149912485faf
 import Tkinter as tk
 import ttk
 import threading
