@@ -19,8 +19,6 @@ def popupmsg(msg):
     B1.pack()
     popup.mainloop()
 
-
-
 class SeatrecControlHub(tk.Tk):
 
     def __init__(self,*args,**kwargs):
@@ -66,21 +64,22 @@ class StartPage(tk.Frame):
         port_label = tk.Label(self,text = "Port")
         port_label.place(x = 600, y = 340)
 
-        self.baud_entry = tk.Entry(width = 7)
-        self.baud_entry.place(x = 500, y = 365)
+        baud_entry = tk.Entry(self,width = 7)
+        baud_entry.place(x = 500, y = 365)
 
-        self.port_entry = tk.Entry(width = 7)
-        self.port_entry.place(x = 600, y = 365)
+        port_entry = tk.Entry(self,width = 7)
+        port_entry.place(x = 600, y = 365)
 
-        connected = -1
+        self.port = port_entry.get()
+        self.baud = baud_entry.get()
 
-        self.connectbutton = tk.Button(text = "Connect", command = lambda: connected=self.connect
-        self.connectbutton.place(x = 600, y = 400)
-    
-        if connected == 0:
-            controller.show_frame(Seatrec_Control_Hub) 
+        connectbutton = tk.Button(self,text = "Connect", command = self.connect) 
+        connectbutton.place(x = 600, y = 400)
+
+        nextbutton = tk.Button(self, text = "Next", command = lambda : controller.show_frame(Seatrec_Control_Hub))
+        nextbutton.place(x = 600, y = 500)
             
-
+        
     def connect(self): 
 
         system = platform.system()
@@ -97,8 +96,8 @@ class StartPage(tk.Frame):
                 self.version_ = int(modes)
                 # print self.version_
 
-        port = self.port_entry.get()
-        baud = self.baud_entry.get() 
+        port = self.port
+        baud = self.baud
 
         sys_list = [("Windows","1","COM"),
                     ("Linux", "2","/dev/tty"),
@@ -109,11 +108,15 @@ class StartPage(tk.Frame):
                 try:
                     ser = serial.Serial(ports + str(port), baud)
                     if ser.is_open :
+                        popupmsg("Running " + types + ": Connected... Please click Next")
                         print "Connected..."
-                        return 0 
+                        return 0
                     else :
+                        print "Unable to connect..."
+                        popupmsg("Unable to connect...")
                         return -1 
                 except:
+                    popupmsg("Running " + types + ": Cant Open Specified Port, Try Again")
                     print "Running " + types + ": Cant Open Specified Port"
       
 
@@ -126,7 +129,7 @@ class Seatrec_Control_Hub(tk.Frame):
 
 
         reconnectbutton = ttk.Button(self, text="Reconnect", command=lambda: controller.show_frame(StartPage))
-        reconnectbutton.pack()
+        reconnectbutton.place(x = 900, y = 600)
 
 app = SeatrecControlHub()
 app.geometry("1280x720")
