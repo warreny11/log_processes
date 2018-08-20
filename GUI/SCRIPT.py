@@ -9,36 +9,12 @@ class Serialstuff():
         
     def serialconnect(self,port,baud):
 
-        system = platform.system()
-            # This determines the system running
-        poss_systems =[
-                ("Windows", "1"),
-                ("Linux", "2"),
-                ("Darwin", "3"),
-            ]
-
-        for text,modes in poss_systems:
-            if system == text:
-                # print system
-                version_ = int(modes)
-                # print self.version_
-
-        sys_list = [("Windows","1","COM"),
-                    ("Linux", "2","/dev/tty"),
-                    ("Mac", "3","/dev/tty.")]
-
-            
-        for types, nums, ports in sys_list:
-            if version_ == int(nums):
-                try:
-                    self.ser = serial.Serial(ports + str(port), baud)
-                    if self.ser.is_open :
-                        return 0
-                    else :
-                        return -1 
-                except:
-                    print("Running " + types + ": Can't Open Specified Port, Try Again")
-                    sys.exit()
+        self.ser = serial.Serial(str(port), baud)
+        while self.ser.is_open:
+            return 0
+        else:
+            return -1
+        
 
     def serialwrite(self, my_input):
         self.ser.write(my_input)
@@ -60,13 +36,9 @@ class NonSerial():
         print "Initializing Connection..."
 
     def connect(self,port,baud): 
-
-        if Serialstuff.serialconnect == 0:
-            print "Connection Established...Serial Port Open..."
-
-        else :
-            print "Unconnected...Please Try Again"
-            sys.exit()
+        
+        Connect_status = Serialstuff.serialconnect(self,port,baud)
+        return Connect_status
                     
     def commands(self,my_input): 
         
@@ -99,7 +71,7 @@ class NonSerial():
             sys.exit()
 
         if commandstatus == "free":
-            Serialstuff.serialwrite(self.my_input)
+            Serialstuff.serialwrite(self,self.my_input)
         
         commandstatus = "start"
         return commandstatus 
