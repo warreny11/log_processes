@@ -71,18 +71,28 @@ class StartPage(tk.Frame):
         port_label = tk.Label(self,text = "Port")
         port_label.place(x = 600, y = 340)
 
-        baud_entry = tk.Entry(self,width = 7)
-        baud_entry.place(x = 500, y = 365)
+        self.baud_entry = tk.Entry(width = 7)
+        self.baud_entry.place(x = 500, y = 365)
 
-        port_entry = tk.Entry(self,width = 7)
-        port_entry.place(x = 600, y = 365)
+        self.port_entry = tk.Entry(width = 7)
+        self.port_entry.place(x = 600, y = 365)
 
-        self.port = port_entry.get()
-        self.baud = baud_entry.get()
+        
+        self.connectbutton = tk.Button(text = "Connect", command = self.connect)
+        self.connectbutton.place(x = 600, y = 400)
 
-        # connect function use in button, and page navigation
-        connectbutton = tk.Button(self,text = "Connect", command = self.connect) 
-        connectbutton.place(x = 600, y = 400)
+        # baud_entry = tk.Entry(self,width = 7)
+        # baud_entry.place(x = 500, y = 365)
+
+        # port_entry = tk.Entry(self,width = 7)
+        # port_entry.place(x = 600, y = 365)
+
+        # self.port = port_entry.get()
+        # self.baud = baud_entry.get()
+
+        # # connect function use in button, and page navigation
+        # connectbutton = tk.Button(self,text = "Connect", command = self.connect) 
+        # connectbutton.place(x = 600, y = 400)
 
         nextbutton = tk.Button(self, text = "Next", command = lambda : controller.show_frame(Seatrec_Control_Hub))
         nextbutton.place(x = 600, y = 500)
@@ -90,8 +100,8 @@ class StartPage(tk.Frame):
         
     def connect(self): 
 
-        port = self.port
-        baud = self.baud
+        # port = self.port
+        # baud = self.baud
 
         system = platform.system()
         # This determines the system running
@@ -112,10 +122,12 @@ class StartPage(tk.Frame):
                     ("Linux", "2","/dev/tty"),
                     ("Mac", "3","/dev/tty.")]
 
+        port = self.port_entry.get()
+        baud = self.baud_entry.get() 
+
         for types, nums, ports in sys_list:
             if self.version_ == int(nums):
                 try:
-                    
                     self.ser = serial.Serial(ports + str(port), baud)
                     if self.ser.is_open :
                         popupmsg("Running " + types + ": Connected... Please click Next")
@@ -126,8 +138,8 @@ class StartPage(tk.Frame):
                         popupmsg("Unable to connect...")
                         return -1 
                 except:
-                    popupmsg("Running " + types + ": Cant Open Specified Port, Try Again")
-                    print "Running " + types + ": Cant Open Specified Port"
+                    popupmsg("Running " + types + ": Can't Open Specified Port, Try Again")
+                    print "Running " + types + ": Can't Open Specified Port"
         
     def serwrite(self,my_input):
         self.my_input = my_input
