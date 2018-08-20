@@ -81,14 +81,17 @@ class StartPage(tk.Frame):
         self.baud = baud_entry.get()
 
         # connect function use in button, and page navigation
-        connectbutton = tk.Button(self,text = "Connect", command = lambda : self.connect(self.port,self.baud)) 
+        connectbutton = tk.Button(self,text = "Connect", command = self.connect) 
         connectbutton.place(x = 600, y = 400)
 
         nextbutton = tk.Button(self, text = "Next", command = lambda : controller.show_frame(Seatrec_Control_Hub))
         nextbutton.place(x = 600, y = 500)
             
         
-    def connect(self,port,baud): 
+    def connect(self): 
+
+        port = self.port
+        baud = self.baud
 
         system = platform.system()
         # This determines the system running
@@ -147,7 +150,7 @@ class StartPage(tk.Frame):
 
     def executecommand(self,my_input,ser):
         self.my_input = my_input
-        self.ser = self.connect(self.port,self.baud)
+        # self.ser = self.connect(self.port,self.baud)
 
         commandstatus = "start"
         commandstatus = self.commands(self.my_input)
