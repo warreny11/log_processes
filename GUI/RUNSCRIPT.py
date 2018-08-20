@@ -1,10 +1,15 @@
 import serial
 import time
 from SCRIPT import Connection
+import sys
 
-print "port: ",
+
+print "port:",
+sys.stdout.flush()
 port = raw_input()
-print "baud: ",
+
+print "baud:",
+sys.stdout.flush()
 baud = raw_input() 
 
 my_SL1_connection = Connection()

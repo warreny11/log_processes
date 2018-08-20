@@ -6,6 +6,26 @@ import platform
 
 #port = "/dev/tty.usbserial"
 #baud = 9600
+def serial(port,baud):
+    
+
+    sys_list = [("Windows","1","COM"),
+                ("Linux", "2","/dev/tty"),
+                ("Mac", "3","/dev/tty.")]
+
+        
+    for types, nums, ports in sys_list:
+        if self.version_ == int(nums):
+            try:
+                self.ser = serial.Serial(ports + str(port), baud)
+                if self.ser.is_open :
+                    return 0
+                else :
+                    return -1 
+            except:
+                print("Running " + types + ": Can't Open Specified Port, Try Again")
+                sys.exit()
+    
 
 class Connection():
     
@@ -13,12 +33,13 @@ class Connection():
         
         self.rxstr = ""
         print "Initializing Connection..."
+        print "Unable to connect..."
 
     def connect(self,port,baud): 
 
         # port = self.port
         # baud = self.baud
-
+        print("Running " + types + ": Connected...")
         system = platform.system()
         # This determines the system running
         poss_systems =[
@@ -26,34 +47,17 @@ class Connection():
                 ("Linux", "2"),
                 ("Darwin", "3"),
             ]
-
         for text,modes in poss_systems:
             if system == text:
                 # print system
                 self.version_ = int(modes)
                 # print self.version_
-  
-        # this is the version setter that takes system and sets the port and baud defaults
-        sys_list = [("Windows","1","COM"),
-                    ("Linux", "2","/dev/tty"),
-                    ("Mac", "3","/dev/tty.")]
+        serial(port, baud)
 
         
-        for types, nums, ports in sys_list:
-            if self.version_ == int(nums):
-                try:
-                    self.ser = serial.Serial(ports + str(port), baud)
-                    if self.ser.is_open :
-                        print("Running " + types + ": Connected...")
-                        
-                        return 0
-                    else :
-                        print "Unable to connect..."
-                        
-                        return -1 
-                except:
-                    print("Running " + types + ": Can't Open Specified Port, Try Again")
-                    sys.exit()
+  
+        # this is the version setter that takes system and sets the port and baud defaults
+        
                     
         
 
