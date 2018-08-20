@@ -81,14 +81,14 @@ class StartPage(tk.Frame):
         self.baud = baud_entry.get()
 
         # connect function use in button, and page navigation
-        connectbutton = tk.Button(self,text = "Connect", command = self.connect) 
+        connectbutton = tk.Button(self,text = "Connect", command = lambda : self.connect(self.port,self.baud)) 
         connectbutton.place(x = 600, y = 400)
 
         nextbutton = tk.Button(self, text = "Next", command = lambda : controller.show_frame(Seatrec_Control_Hub))
         nextbutton.place(x = 600, y = 500)
             
         
-    def connect(self): 
+    def connect(self,port,baud): 
 
         system = platform.system()
 
@@ -104,8 +104,7 @@ class StartPage(tk.Frame):
                 self.version_ = int(modes)
                 # print self.version_
 
-        port = self.port
-        baud = self.baud
+    
 
         sys_list = [("Windows","1","COM"),
                     ("Linux", "2","/dev/tty"),
@@ -144,7 +143,7 @@ class Seatrec_Control_Hub(tk.Frame,StartPage):
         label.pack(pady=10,padx=10)
 
 
-        exitbutton = ttk.Button(self, text="Exit", command=self.executecommand("e"))
+        exitbutton = ttk.Button(self, text="Exit", command= lambda : self.executecommand("e"))
         exitbutton.place(x = 400, y = 600)
 
         reconnectbutton = ttk.Button(self, text="Reconnect", command=lambda: controller.show_frame(StartPage))
