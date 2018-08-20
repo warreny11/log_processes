@@ -1,10 +1,11 @@
 import serial
 import Tkinter as tk
 import ttk
-import threading
 import time
 import io
 import platform
+import sys 
+from data_sort import convert
 
 LARGE_FONT = ("Verdana", 12)
 NORM_FONT = ("Helvetica", 10)
@@ -18,8 +19,6 @@ def popupmsg(msg):
     B1 = ttk.Button(popup, text="Okay", command = popup.destroy)
     B1.pack()
     popup.mainloop()
-
-
 
 class SeatrecControlHub(tk.Tk):
 
@@ -58,29 +57,37 @@ class StartPage(tk.Frame):
 
     def __init__(self,parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self,text = "Start Page", font = LARGE_FONT)
+        
+        # used in Autoprint
+        self.rxstr = "" 
+
+        # Frame Label
+        label = tk.Label(self,text = "Connection Page", font = LARGE_FONT)
         label.pack(pady=10,padx=10)
 
+        # labels and entry system for port and baud
         baud_label = tk.Label(self,text = "Baud")
         baud_label.place(x = 500, y = 340)
         port_label = tk.Label(self,text = "Port")
         port_label.place(x = 600, y = 340)
 
-        self.baud_entry = tk.Entry(width = 7)
-        self.baud_entry.place(x = 500, y = 365)
+        baud_entry = tk.Entry(self,width = 7)
+        baud_entry.place(x = 500, y = 365)
 
-        self.port_entry = tk.Entry(width = 7)
-        self.port_entry.place(x = 600, y = 365)
+        port_entry = tk.Entry(self,width = 7)
+        port_entry.place(x = 600, y = 365)
 
-        connected = -1
+        self.port = port_entry.get()
+        self.baud = baud_entry.get()
 
-        self.connectbutton = tk.Button(text = "Connect", command = lambda: connected=self.connect)
-        self.connectbutton.place(x = 600, y = 400)
-    
-        if connected == 0:
-            controller.show_frame(Seatrec_Control_Hub) 
+        # connect function use in button, and page navigation
+        connectbutton = tk.Button(self,text = "Connect", command = self.connect) 
+        connectbutton.place(x = 600, y = 400)
+
+        nextbutton = tk.Button(self, text = "Next", command = lambda : controller.show_frame(Seatrec_Control_Hub))
+        nextbutton.place(x = 600, y = 500)
             
-
+        
     def connect(self): 
 
         system = platform.system()
@@ -97,8 +104,8 @@ class StartPage(tk.Frame):
                 self.version_ = int(modes)
                 # print self.version_
 
-        port = self.port_entry.get()
-        baud = self.baud_entry.get() 
+        port = self.port
+        baud = self.baud
 
         sys_list = [("Windows","1","COM"),
                     ("Linux", "2","/dev/tty"),
@@ -107,26 +114,100 @@ class StartPage(tk.Frame):
         for types, nums, ports in sys_list:
             if self.version_ == int(nums):
                 try:
-                    ser = serial.Serial(ports + str(port), baud)
-                    if ser.is_open :
+                    
+                    self.ser = serial.Serial(ports + str(port), baud)
+                    if self.ser.is_open :
+                        popupmsg("Running " + types + ": Connected... Please click Next")
                         print "Connected..."
-                        return 0 
+                        return 0
                     else :
+                        print "Unable to connect..."
+                        popupmsg("Unable to connect...")
                         return -1 
                 except:
+                    popupmsg("Running " + types + ": Cant Open Specified Port, Try Again")
                     print "Running " + types + ": Cant Open Specified Port"
+        
+    def serwrite(self,my_input):
+        self.my_input = my_input
+        self.ser.write(self.my_input)
+
+    
+    
+    
       
 
-class Seatrec_Control_Hub(tk.Frame):
+class Seatrec_Control_Hub(tk.Frame,StartPage):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
         label = tk.Label(self,text = "Seatrec Control Hub", font = LARGE_FONT)
         label.pack(pady=10,padx=10)
 
 
+        exitbutton = ttk.Button(self, text="Exit", command=self.executecommand("e"))
+        exitbutton.place(x = 400, y = 600)
 
         reconnectbutton = ttk.Button(self, text="Reconnect", command=lambda: controller.show_frame(StartPage))
-        reconnectbutton.pack()
+        reconnectbutton.place(x = 900, y = 600)
+    
+    ## functions requiring the serial connection
+
+    def disconnect(self):    
+        try:
+            self.ser.close() 
+        
+        except AttributeError:
+            # popupmsg("No connection established...")
+            print "Closed without Using it -_-"
+        sys.exit
+        app.quit()
+
+    def commands(self,my_input): 
+        
+        if my_input == "a":
+            commandstatus = "auto"
+            print "Entering Auto-update Mode..."
+            
+        elif my_input == "e":
+            commandstatus = "exit"
+            print "Exiting program and Disconnecting from Serial"
+
+        else:
+            commandstatus = "free"
+
+        return commandstatus
+        
+    def executecommand(self,my_input):
+        self.my_input = my_input
+        
+
+        commandstatus = "start"
+        commandstatus = self.commands(self.my_input)
+
+        if commandstatus == "auto":
+            out = ''
+            out += self.ser.read()
+            self.Autoprint(out)
+                  
+        if commandstatus == "exit":
+            self.ser.close() 
+            sys.exit()
+            app.quit()
+
+        if commandstatus == "free":
+            self.ser.write(self.my_input)
+        
+        commandstatus = "start"
+        return commandstatus 
+
+    def Autoprint(self,out):
+        self.rxstr += out
+        
+        if out == ';':
+            print(convert(self.rxstr))
+            self.rxstr = ''
+
+    
 
 app = SeatrecControlHub()
 app.geometry("1280x720")
