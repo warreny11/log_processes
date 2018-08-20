@@ -3,30 +3,26 @@ import sys
 from data_sort import convert
 import platform
 
-print "port:",
-sys.stdout.flush()
-port = raw_input()
 
-print "baud:",
-sys.stdout.flush()
-baud = raw_input() 
 
-class Serialstuff():
-    def __init__(self,ser):
-        self.ser = ser
-        
-    def serialconnect(self,port,baud):
+class SerialWrapper:
+    def __init__(self, port, baud):
+        print "Initializing Connection..."
 
-        try:
-            self.ser = serial.Serial(str(port), baud)
+        try: 
+            self.ser = serial.Serial(str(port), int(baud))
             while self.ser.is_open:
+                connect_status = 0
                 print "Connected..."
-                return 0
+                
             else:
-                return -1
-        except :
-            print "Unconnected..."
-        
+                connect_status = -1
+                print "Unconnected..."
+                    
+        except:
+            connect_status = -1
+            print "Connection Failed...Did you type the full name of the Port?"
+            
 
     def serialwrite(self, my_input):
         self.ser.write(my_input)
@@ -36,20 +32,24 @@ class Serialstuff():
 
     def serialclose(self):
         self.ser.close()
+                
+    def sendData(self, data):
+        data += "\r\n"
+        self.ser.write(data.encode())
 
-    #port = "/dev/tty.usbserial"
-    #baud = 9600
 
 class NonSerial():
     
     def __init__(self):
         
         self.rxstr = ""
-        print "Initializing Connection..."
+        
 
     def connect(self,port,baud): 
-        
-        Connect_status = Serialstuff.serialconnect(port,baud)
+        print "hey"
+        SerialWrapper(port,baud)
+
+        Connect_status = 1
         return Connect_status
                     
     def commands(self,my_input): 
@@ -75,15 +75,15 @@ class NonSerial():
 
         if commandstatus == "auto":
             out = ''
-            out += Serialstuff.serialread
+            out += SerialWrapper.serialread
             self.Autoprint(out)
                   
         if commandstatus == "exit":
-            Serialstuff.serialclose 
+            SerialWrapper.serialclose 
             sys.exit()
 
         if commandstatus == "free":
-            Serialstuff.serialwrite(self,self.my_input)
+            SerialWrapper.serialwrite(self,self.my_input)
         
         commandstatus = "start"
         return commandstatus 
