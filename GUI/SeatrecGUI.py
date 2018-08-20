@@ -248,9 +248,11 @@ class Seatrec_Control_Hub(tk.Frame,StartPage):
             self.Autoprint(out)
                   
         if commandstatus == "exit":
-            self.ser.close() 
-            sys.exit()
-            app.quit()
+            try : 
+                self.ser.close() 
+                sys.exit()
+            except : 
+                sys.exit()
 
         if commandstatus == "free":
             self.ser.write(self.my_input)
