@@ -3,24 +3,14 @@ import sys
 from data_sort import convert
 import platform
 
-
-#port = "/dev/tty.usbserial"
-#baud = 9600
-
-class Connection():
-    
-    def __init__(self):
+class Serialstuff():
+    def __init__(self,ser):
+        self.ser = ser
         
-        self.rxstr = ""
-        print "Initializing Connection..."
-
-    def connect(self,port,baud): 
-
-        # port = self.port
-        # baud = self.baud
+    def serialconnect(self,port,baud):
 
         system = platform.system()
-        # This determines the system running
+            # This determines the system running
         poss_systems =[
                 ("Windows", "1"),
                 ("Linux", "2"),
@@ -30,33 +20,54 @@ class Connection():
         for text,modes in poss_systems:
             if system == text:
                 # print system
-                self.version_ = int(modes)
+                version_ = int(modes)
                 # print self.version_
-  
-        # this is the version setter that takes system and sets the port and baud defaults
+
         sys_list = [("Windows","1","COM"),
                     ("Linux", "2","/dev/tty"),
                     ("Mac", "3","/dev/tty.")]
 
-        
+            
         for types, nums, ports in sys_list:
-            if self.version_ == int(nums):
+            if version_ == int(nums):
                 try:
                     self.ser = serial.Serial(ports + str(port), baud)
                     if self.ser.is_open :
-                        print("Running " + types + ": Connected...")
-                        
                         return 0
                     else :
-                        print "Unable to connect..."
-                        
                         return -1 
                 except:
                     print("Running " + types + ": Can't Open Specified Port, Try Again")
                     sys.exit()
-                    
-        
 
+    def serialwrite(self, my_input):
+        self.ser.write(my_input)
+
+    def serialread(self):
+        self.ser.read()
+
+    def serialclose(self):
+        self.ser.close()
+
+    #port = "/dev/tty.usbserial"
+    #baud = 9600
+
+class NonSerial():
+    
+    def __init__(self):
+        
+        self.rxstr = ""
+        print "Initializing Connection..."
+
+    def connect(self,port,baud): 
+
+        if Serialstuff.serialconnect == 0:
+            print "Connection Established...Serial Port Open..."
+
+        else :
+            print "Unconnected...Please Try Again"
+            sys.exit()
+                    
     def commands(self,my_input): 
         
         if my_input == "a":
@@ -80,15 +91,15 @@ class Connection():
 
         if commandstatus == "auto":
             out = ''
-            out += self.ser.read()
+            out += Serialstuff.serialread
             self.Autoprint(out)
                   
         if commandstatus == "exit":
-            self.ser.close() 
+            Serialstuff.serialclose 
             sys.exit()
 
         if commandstatus == "free":
-            self.ser.write(self.my_input)
+            Serialstuff.serialwrite(self.my_input)
         
         commandstatus = "start"
         return commandstatus 
