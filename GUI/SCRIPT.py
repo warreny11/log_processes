@@ -1,6 +1,7 @@
 import serial
 import sys
 from data_sort import convert
+import platform
 
 
 #port = "/dev/tty.usbserial"
@@ -13,17 +14,47 @@ class Connection():
         self.rxstr = ""
         print "Initializing Connection..."
 
-    def connect(self):
-        self.port = raw_input("port: ")
-        self.baud = raw_input("baud: ")
-        try:
-            self.ser = serial.Serial(str(self.port),self.baud)
-            while self.ser.is_open:
-                return 0
-            else:
-                return -1
-        except:
-            "Failed to open port..."
+    def connect(self,port,baud): 
+
+        # port = self.port
+        # baud = self.baud
+
+        system = platform.system()
+        # This determines the system running
+        poss_systems =[
+                ("Windows", "1"),
+                ("Linux", "2"),
+                ("Darwin", "3"),
+            ]
+
+        for text,modes in poss_systems:
+            if system == text:
+                # print system
+                self.version_ = int(modes)
+                # print self.version_
+  
+        # this is the version setter that takes system and sets the port and baud defaults
+        sys_list = [("Windows","1","COM"),
+                    ("Linux", "2","/dev/tty"),
+                    ("Mac", "3","/dev/tty.")]
+
+        
+        for types, nums, ports in sys_list:
+            if self.version_ == int(nums):
+                try:
+                    self.ser = serial.Serial(ports + str(port), baud)
+                    if self.ser.is_open :
+                        print("Running " + types + ": Connected... Please click Next")
+                        
+                        return 0
+                    else :
+                        print "Unable to connect..."
+                        
+                        return -1 
+                except:
+                    print("Running " + types + ": Can't Open Specified Port, Try Again")
+                    sys.exit()
+                    
         
 
     def commands(self,my_input): 
