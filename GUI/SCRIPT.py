@@ -44,7 +44,7 @@ class Connection():
                 try:
                     self.ser = serial.Serial(ports + str(port), baud)
                     if self.ser.is_open :
-                        print("Running " + types + ": Connected... Please click Next")
+                        print("Running " + types + ": Connected...")
                         
                         return 0
                     else :
