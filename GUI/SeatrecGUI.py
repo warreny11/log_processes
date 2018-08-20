@@ -74,7 +74,7 @@ class StartPage(tk.Frame):
 
         connected = -1
 
-        self.connectbutton = tk.Button(text = "Connect", command = lambda: connected=self.connect
+        self.connectbutton = tk.Button(text = "Connect", command = lambda: connected=self.connect)
         self.connectbutton.place(x = 600, y = 400)
     
         if connected == 0:
