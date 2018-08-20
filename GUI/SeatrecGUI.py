@@ -81,17 +81,17 @@ class StartPage(tk.Frame):
         self.baud = baud_entry.get()
 
         # connect function use in button, and page navigation
-        connectbutton = tk.Button(self,text = "Connect", command = self.connect) 
+        connectbutton = tk.Button(self,text = "Connect", command = lambda : self.connect(self.port,self.baud)) 
         connectbutton.place(x = 600, y = 400)
 
         nextbutton = tk.Button(self, text = "Next", command = lambda : controller.show_frame(Seatrec_Control_Hub))
         nextbutton.place(x = 600, y = 500)
             
         
-    def connect(self): 
+    def connect(self,port,baud): 
 
         system = platform.system()
-
+        # This determines the system running
         poss_systems =[
                 ("Windows", "1"),
                 ("Linux", "2"),
@@ -103,10 +103,8 @@ class StartPage(tk.Frame):
                 # print system
                 self.version_ = int(modes)
                 # print self.version_
-
-        port = self.port
-        baud = self.baud
-
+  
+        # this is the version setter that takes system and sets the port and baud defaults
         sys_list = [("Windows","1","COM"),
                     ("Linux", "2","/dev/tty"),
                     ("Mac", "3","/dev/tty.")]
@@ -119,7 +117,7 @@ class StartPage(tk.Frame):
                     if self.ser.is_open :
                         popupmsg("Running " + types + ": Connected... Please click Next")
                         print "Connected..."
-                        return 0
+                        return self.ser
                     else :
                         print "Unable to connect..."
                         popupmsg("Unable to connect...")
@@ -132,11 +130,56 @@ class StartPage(tk.Frame):
         self.my_input = my_input
         self.ser.write(self.my_input)
 
-    
-    
-    
-      
+    def commands(self,my_input): 
+        
+        if my_input == "a":
+            commandstatus = "auto"
+            print "Entering Auto-update Mode..."
+            
+        elif my_input == "e":
+            commandstatus = "exit"
+            print "Exiting program and Disconnecting from Serial"
 
+        else:
+            commandstatus = "free"
+
+        return commandstatus
+
+    def executecommand(self,my_input,ser):
+        self.my_input = my_input
+        self.ser = self.connect(self.port,self.baud)
+
+        commandstatus = "start"
+        commandstatus = self.commands(self.my_input)
+
+        if commandstatus == "auto":
+            out = ''
+            out += self.ser.read()
+            self.Autoprint(out)
+                  
+        if commandstatus == "exit":
+            try:
+                self.ser.close() 
+                app.quit()
+                sys.exit()
+            except:
+                app.quit()
+                sys.exit()
+
+        if commandstatus == "free":
+            self.ser.write(self.my_input)
+        
+        commandstatus = "start"
+        return commandstatus 
+
+    def Autoprint(self,out):
+        self.rxstr += out
+        
+        if out == ';':
+            print(convert(self.rxstr))
+            self.rxstr = ''
+    
+    
 class Seatrec_Control_Hub(tk.Frame,StartPage):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
@@ -144,7 +187,7 @@ class Seatrec_Control_Hub(tk.Frame,StartPage):
         label.pack(pady=10,padx=10)
 
 
-        exitbutton = ttk.Button(self, text="Exit", command=self.executecommand("e"))
+        exitbutton = ttk.Button(self, text="Exit", command= lambda : self.executecommand("e"))
         exitbutton.place(x = 400, y = 600)
 
         reconnectbutton = ttk.Button(self, text="Reconnect", command=lambda: controller.show_frame(StartPage))
