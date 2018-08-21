@@ -7,7 +7,7 @@ import platform
 
 class SerialWrapper:
     def __init__(self,port,baud):
-        print "Initializing Connection..."
+        
         self.port = port
         self.baud = baud
 
@@ -20,14 +20,17 @@ class SerialWrapper:
             if self.ser.is_open:
                 connect_status = 0
                 print "Connected..."
+                sys.stdout.flush()
                 
             else:
                 connect_status = -1
                 print "Unconnected..."
+                sys.stdout.flush()
                     
         except:
             connect_status = -1
             print "Connection Failed...Did you type the full name of the Port?"
+            sys.stdout.flush()
             sys.exit()
 
         return connect_status
@@ -36,15 +39,11 @@ class SerialWrapper:
         self.ser.write(my_input)
 
     def serialread(self):
-        self.ser.read()
+        return self.ser.readline().replace("\n", "")
 
     def serialclose(self):
         self.ser.close()
                 
-    def sendData(self, data):
-        data += "\r\n"
-        self.ser.write(data.encode())
-
 
 class NonSerial(SerialWrapper):
     
@@ -54,6 +53,12 @@ class NonSerial(SerialWrapper):
         
 
     def connect(self,port,baud):
+
+        print 
+        sys.stdout.flush()
+        print "Initializing Connection..."
+        sys.stdout.flush()
+
         self.port = port
         self.baud = baud
         
@@ -63,7 +68,7 @@ class NonSerial(SerialWrapper):
         SerialWrapper(port,baud)
         connect_status = self.serialconnect()
 
-        print connect_status
+        # print connect_status
 
         return connect_status
         
@@ -73,10 +78,13 @@ class NonSerial(SerialWrapper):
         if my_input == "a":
             commandstatus = "auto"
             print "Entering Auto-update Mode..."
+            sys.stdout.flush()
+            
             
         elif my_input == "e":
             commandstatus = "exit"
             print "Exiting program and Disconnecting from Serial"
+            sys.stdout.flush()
 
         else:
             commandstatus = "free"
@@ -91,24 +99,29 @@ class NonSerial(SerialWrapper):
 
         if commandstatus == "auto":
             out = ''
-            out += SerialWrapper.serialread
+            out += str(SerialWrapper.serialread(self))
+            print out
+            print "sup"
+            sys.stdout.flush()
             self.Autoprint(out)
                   
         if commandstatus == "exit":
-            SerialWrapper.serialclose 
+            SerialWrapper.serialclose(self)
             sys.exit()
 
         if commandstatus == "free":
-            SerialWrapper.serialwrite(self.my_input)
+            SerialWrapper.serialwrite(self,self.my_input)
         
         commandstatus = "start"
         return commandstatus 
 
     def Autoprint(self,out):
         self.rxstr += out
-        
+        print "hey"
+        sys.stdout.flush()
         if out == ';':
             print(convert(self.rxstr))
+            sys.stdout.flush()
             self.rxstr = ''
 
 

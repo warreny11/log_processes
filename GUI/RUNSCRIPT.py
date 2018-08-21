@@ -13,10 +13,10 @@ sys.stdout.flush()
 baud = raw_input()
 
 my_SL1_connection = NonSerial()
-my_SL1_connection.connect(port,baud)
+con1 = my_SL1_connection.connect(port,baud)
 
 
-while (1):
+while con1 == 0:
     my_SL1_connection.executecommand(raw_input())
     
             
