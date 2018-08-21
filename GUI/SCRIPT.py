@@ -6,11 +6,17 @@ import platform
 
 
 class SerialWrapper:
-    def __init__(self, port, baud):
+    def __init__(self,port,baud):
         print "Initializing Connection..."
+        self.port = port
+        self.baud = baud
 
+    def serialconnect(self):
+
+        print self.port
         try: 
-            self.ser = serial.Serial(str(port), int(baud))
+            self.ser = serial.Serial(str(self.port), int(self.baud))
+            
             if self.ser.is_open:
                 connect_status = 0
                 print "Connected..."
@@ -25,10 +31,10 @@ class SerialWrapper:
             sys.exit()
 
         return connect_status
-            
 
     def serialwrite(self, my_input):
-        self.ser.write(my_input)
+        self.my_input = my_input
+        self.ser.write(self.my_input)
 
     def serialread(self):
         self.ser.read()
@@ -41,19 +47,22 @@ class SerialWrapper:
         self.ser.write(data.encode())
 
 
-class NonSerial():
+class NonSerial(SerialWrapper):
     
     def __init__(self):
         
         self.rxstr = ""
         
 
-    def connect(self,port,baud): 
+    def connect(self,port,baud):
+        self.port = port
+        self.baud = baud
         print "hey"
 
         connect_status = ""
         
-        connect_status = SerialWrapper(port,baud)
+        SerialWrapper(port,baud)
+        connect_status = self.serialconnect()
 
         print connect_status
 
@@ -91,7 +100,7 @@ class NonSerial():
             sys.exit()
 
         if commandstatus == "free":
-            SerialWrapper.serialwrite(self,self.my_input)
+            SerialWrapper.serialwrite(self.my_input)
         
         commandstatus = "start"
         return commandstatus 
