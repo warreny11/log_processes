@@ -16,7 +16,7 @@ my_SL1_connection = NonSerial()
 my_SL1_connection.connect(port,baud)
 
 
-while connect_status==0:
+while (1):
     my_SL1_connection.executecommand(raw_input())
     
             

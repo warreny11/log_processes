@@ -13,7 +13,7 @@ class SerialWrapper:
 
     def serialconnect(self):
 
-        print self.port
+        # print self.port
         try: 
             self.ser = serial.Serial(str(self.port), int(self.baud))
             
@@ -33,8 +33,7 @@ class SerialWrapper:
         return connect_status
 
     def serialwrite(self, my_input):
-        self.my_input = my_input
-        self.ser.write(self.my_input)
+        self.ser.write(my_input)
 
     def serialread(self):
         self.ser.read()
@@ -57,7 +56,7 @@ class NonSerial(SerialWrapper):
     def connect(self,port,baud):
         self.port = port
         self.baud = baud
-        print "hey"
+        
 
         connect_status = ""
         
