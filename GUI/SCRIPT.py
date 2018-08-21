@@ -2,6 +2,7 @@ import serial
 import sys
 from data_sort import convert
 import platform
+import threading
 
 
 
@@ -39,7 +40,7 @@ class SerialWrapper:
         self.ser.write(my_input)
 
     def serialread(self):
-        return self.ser.readline()
+        return self.ser.read()
 
     def serialclose(self):
         self.ser.close()
@@ -118,7 +119,7 @@ class NonSerial(SerialWrapper):
     def Autoprint(self,out):
         self.rxstr += out
         print "hey"
-        print self.rxstr
+        print "rxstr = " + self.rxstr
         sys.stdout.flush()
         if out == ';':
             print(convert(self.rxstr))
