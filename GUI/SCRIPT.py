@@ -12,8 +12,11 @@ class SerialWrapper:
         self.baud = baud
 
     def serialconnect(self):
+
+        print self.port
         try: 
             self.ser = serial.Serial(str(self.port), int(self.baud))
+            
             if self.ser.is_open:
                 connect_status = 0
                 print "Connected..."
@@ -21,7 +24,7 @@ class SerialWrapper:
             else:
                 connect_status = -1
                 print "Unconnected..."
-                
+                    
         except:
             connect_status = -1
             print "Connection Failed...Did you type the full name of the Port?"
@@ -44,19 +47,22 @@ class SerialWrapper:
         self.ser.write(data.encode())
 
 
-class NonSerial():
+class NonSerial(SerialWrapper):
     
     def __init__(self):
         
         self.rxstr = ""
         
 
-    def connect(self,port,baud): 
+    def connect(self,port,baud):
+        self.port = port
+        self.baud = baud
         print "hey"
 
         connect_status = ""
         
         SerialWrapper(port,baud)
+        connect_status = self.serialconnect()
 
         print connect_status
 
