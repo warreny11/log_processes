@@ -39,7 +39,7 @@ class SerialWrapper:
         self.ser.write(my_input)
 
     def serialread(self):
-        return self.ser.readline().replace("\n", "")
+        return self.ser.readline()
 
     def serialclose(self):
         self.ser.close()
@@ -118,6 +118,7 @@ class NonSerial(SerialWrapper):
     def Autoprint(self,out):
         self.rxstr += out
         print "hey"
+        print self.rxstr
         sys.stdout.flush()
         if out == ';':
             print(convert(self.rxstr))
