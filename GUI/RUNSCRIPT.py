@@ -12,12 +12,12 @@ print "baud: ",
 sys.stdout.flush()
 baud = raw_input()
 
-my_SL1_connection = SerialWrapper(port,baud)
-nonserial = NonSerial()
+my_SL1_connection = NonSerial()
+my_SL1_connection.connect(port,baud)
 
 
-while my_SL1_connection==0:
-    nonserial.executecommand(raw_input())
+while connect_status==0:
+    my_SL1_connection.executecommand(raw_input())
     
             
 
