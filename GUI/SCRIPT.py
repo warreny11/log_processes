@@ -6,11 +6,11 @@ import platform
 
 
 class SerialWrapper:
-    def __init__(self, port, baud):
+    def __init__(self, port, baud, connect_status):
         print "Initializing Connection..."
 
         try: 
-            self.ser = serial.Serial(str(port), baud)
+            self.ser = serial.Serial(str(port), int(baud))
             while self.ser.is_open:
                 connect_status = 0
                 print "Connected..."
@@ -21,7 +21,8 @@ class SerialWrapper:
                 
         except:
             connect_status = -1
-            print "Unconnected..."
+            print "Connection Failed...Did you type the full name of the Port?"
+            sys.exit()
             
 
     def serialwrite(self, my_input):
@@ -47,10 +48,15 @@ class NonSerial():
 
     def connect(self,port,baud): 
         print "hey"
-        SerialWrapper(port,baud)
 
-        Connect_status = 1
-        return Connect_status
+        connect_status = ""
+        
+        SerialWrapper(port,baud,connect_status)
+
+        print connect_status
+
+        return connect_status
+        
                     
     def commands(self,my_input): 
         
