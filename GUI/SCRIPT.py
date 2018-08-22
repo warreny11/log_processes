@@ -129,10 +129,6 @@ class NonSerial(SerialWrapper):
 
     def Autoprint(self,out):
         self.rxstr += out
-        # # print "hey"
-        # print "rxstr = " + self.rxstr
-        # sys.stdout.flush()
-        # if out == ';':
         print(convert(self.rxstr))
         sys.stdout.flush()
         self.rxstr = ''

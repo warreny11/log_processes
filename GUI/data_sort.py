@@ -10,6 +10,7 @@ def convert(liveline):
     split_line = pattern.findall(liveline)
     data = []
     key = []
+    strdata = []
 
     for i in range(len(split_line)):
         
@@ -20,12 +21,14 @@ def convert(liveline):
         try:
             data[i] = int(data[i],16)
             err = ""
-            return data[i]
+            strdata = str(key[i]) + " = " + str(data[i])
+            return strdata
             
         except:
             data[i] = 0
             err = "NaN"
-            return data[i]
+            strdata = str(key[i]) + " = " + str(err)
+            return strdata
         
 
 #         if debug == 0:
