@@ -17,9 +17,9 @@ my_SL1_connection = NonSerial()
 con1 = my_SL1_connection.connect(port,baud)
 
 
-def runtime():
-    my_SL1_connection.executecommand(raw_input())
+# def runtime():
+#     my_SL1_connection.executecommand(raw_input())
     # t1 = threading.Thread(target = my_SL1_connection.executecommand(raw_input())
         
 while con1 == 0:
-    runtime 
+    my_SL1_connection.executecommand(raw_input())

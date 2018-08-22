@@ -40,7 +40,18 @@ class SerialWrapper:
         self.ser.write(my_input)
 
     def serialread(self):
-        return self.ser.read()
+        eol = ";"
+        leneol = len(eol)
+        line = bytearray()
+        while True:
+            c = self.ser.readline(1)
+            if c:
+                line += c 
+                if line[-leneol:] == eol:
+                    break
+            else:
+                break
+        return bytes(line)
 
     def serialclose(self):
         self.ser.close()
@@ -99,10 +110,10 @@ class NonSerial(SerialWrapper):
         commandstatus = self.commands(self.my_input)
 
         if commandstatus == "auto":
-            out = ''
+            out = ""
             out += str(SerialWrapper.serialread(self))
             print out
-            print "sup"
+            # print "sup"
             sys.stdout.flush()
             self.Autoprint(out)
                   
@@ -118,12 +129,12 @@ class NonSerial(SerialWrapper):
 
     def Autoprint(self,out):
         self.rxstr += out
-        print "hey"
-        print "rxstr = " + self.rxstr
+        # # print "hey"
+        # print "rxstr = " + self.rxstr
+        # sys.stdout.flush()
+        # if out == ';':
+        print(convert(self.rxstr))
         sys.stdout.flush()
-        if out == ';':
-            print(convert(self.rxstr))
-            sys.stdout.flush()
-            self.rxstr = ''
+        self.rxstr = ''
 
 
