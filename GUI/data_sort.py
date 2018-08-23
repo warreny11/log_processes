@@ -22,28 +22,29 @@ def convert(liveline):
             data[i] = int(data[i],16)
             err = ""
             strdata = str(key[i]) + " = " + str(data[i])
-            return strdata
+            # return strdata
             
         except:
             data[i] = 0
             err = "NaN"
             strdata = str(key[i]) + " = " + str(err)
-            return strdata
+            # return strdata
         
 
-#         if debug == 0:
-#             if key[i] == "VB" :    
-#                 print '{0}\r'.format("Voltage : " + str(data[i]*0.001+0) + err + " Volts")
+        if debug == 0:
+            if key[i] == "VB" :    
+                print '{0}\r'.format("Voltage : " + str(data[i]*0.001+0) + err + " Volts")
                 
-#             if key[i] == "PR" :
-#                 print '{0}\r'.format("Pressure : " + str(data[i]*1+0) + err + " Pascals")
+            if key[i] == "PR" :
+                print '{0}\r'.format("Pressure : " + str(data[i]*1+0) + err + " Pascals")
 
-#             if key[i] == "IP" :
-#                 print '{0}\r'.format("Internal Pressure : " + str((data[i]*.25+0)*0.00750062) + err + " mm of mercury")
+            if key[i] == "IP" :
+                print '{0}\r'.format("Internal Pressure : " + str((data[i]*.25+0)*0.00750062) + err + " mm of mercury")
     
-#         if debug == 1:
-#                 time.sleep(.1)
-#                 print '{0}\r'.format("data : " + str((data[i]*.25+0)*0.00750062) + err + " datum")
+        if debug == 1:
+                time.sleep(.1)
+                sys.stdout.write("Datas:   \r" % (data[i]) )
+                sys.stdout.flush()
                 
                 
 # # # #wish list: db connection to data_sort for pulling the 

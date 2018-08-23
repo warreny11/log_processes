@@ -2,7 +2,7 @@ import serial
 import sys
 from data_sort import convert
 import platform
-import threading
+
 
 
 
