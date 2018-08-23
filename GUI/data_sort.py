@@ -43,8 +43,7 @@ def convert(liveline):
     
         if debug == 1:
                 time.sleep(.1)
-                sys.stdout.write("Datas:   \r" % (data[i]) )
-                sys.stdout.flush()
+                print "\033[7A\033[1;35m HELLO \033[7B\033[6D"
                 
                 
 # # # #wish list: db connection to data_sort for pulling the 
